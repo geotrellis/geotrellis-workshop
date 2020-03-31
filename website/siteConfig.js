@@ -11,19 +11,13 @@
 const siteConfig = {
   title: 'GeoTrellis', // Title for your website.
   tagline: 'A geographic data processing engine for high performance applications',
-  url: 'https://geotrellis.io', // Your website URL
-  baseUrl: '/', // Base URL for your project */
-  // For github.io type URLs, you would set the url and baseUrl like:
-  //   url: 'https://facebook.github.io',
-  //   baseUrl: '/test-site/',
+  url: 'https://geotrellis.github.io', // Your website URL
+  baseUrl: '/geotrellis-workshop/', // Base URL for your project */
   customDocsPath: "target/mdoc",
 
   // Used for publishing and more
   projectName: 'geotrellis-workshop',
   organizationName: 'geotrellis',
-  // For top-level user or org sites, the organization is still the same.
-  // e.g., for the https://JoelMarcey.github.io site, it would be set like...
-  //   organizationName: 'JoelMarcey'
 
   // For no header links in the top nav bar -> headerLinks: [],
   headerLinks: [],
