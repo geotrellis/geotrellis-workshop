@@ -15,10 +15,11 @@ pc.stdout.log
 *.aux.xml
 *.jar
 *.crc
-.idea
 *.log
 .DS_Store
 .bloop
 .metals
-.idea
+.idea/workspace.xml
+.idea/usage.statistics.xml
+.idea/tasks.xml
 metals.sbt

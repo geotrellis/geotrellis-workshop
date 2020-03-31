@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="sbt: org.apache.pdfbox:xmpbox:2.0.14:jar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.ivy2/cache/org.apache.pdfbox/xmpbox/bundles/xmpbox-2.0.14.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.ivy2/cache/org.apache.pdfbox/xmpbox/srcs/xmpbox-2.0.14-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

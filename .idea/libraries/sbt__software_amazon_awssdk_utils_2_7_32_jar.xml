@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="sbt: software.amazon.awssdk:utils:2.7.32:jar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.ivy2/cache/software.amazon.awssdk/utils/jars/utils-2.7.32.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.ivy2/cache/software.amazon.awssdk/utils/srcs/utils-2.7.32-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

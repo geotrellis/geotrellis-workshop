@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="sbt: org.jboss.threads:jboss-threads:2.3.0.Beta2:jar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.threads/jboss-threads/jars/jboss-threads-2.3.0.Beta2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.threads/jboss-threads/srcs/jboss-threads-2.3.0.Beta2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

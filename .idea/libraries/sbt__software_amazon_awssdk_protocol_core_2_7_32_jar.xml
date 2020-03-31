@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="sbt: software.amazon.awssdk:protocol-core:2.7.32:jar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.ivy2/cache/software.amazon.awssdk/protocol-core/jars/protocol-core-2.7.32.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.ivy2/cache/software.amazon.awssdk/protocol-core/srcs/protocol-core-2.7.32-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

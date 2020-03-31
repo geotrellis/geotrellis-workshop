@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="sbt: com.openhtmltopdf:openhtmltopdf-core:0.0.1-RC19:jar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.ivy2/cache/com.openhtmltopdf/openhtmltopdf-core/jars/openhtmltopdf-core-0.0.1-RC19.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.ivy2/cache/com.openhtmltopdf/openhtmltopdf-core/srcs/openhtmltopdf-core-0.0.1-RC19-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

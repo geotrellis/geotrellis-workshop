@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="sbt: org.scalameta:fastparse_2.12:1.0.1:jar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.ivy2/cache/org.scalameta/fastparse_2.12/jars/fastparse_2.12-1.0.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.ivy2/cache/org.scalameta/fastparse_2.12/srcs/fastparse_2.12-1.0.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

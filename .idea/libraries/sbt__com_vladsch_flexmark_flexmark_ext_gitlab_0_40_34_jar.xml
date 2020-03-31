@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="sbt: com.vladsch.flexmark:flexmark-ext-gitlab:0.40.34:jar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.ivy2/cache/com.vladsch.flexmark/flexmark-ext-gitlab/jars/flexmark-ext-gitlab-0.40.34.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.ivy2/cache/com.vladsch.flexmark/flexmark-ext-gitlab/srcs/flexmark-ext-gitlab-0.40.34-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

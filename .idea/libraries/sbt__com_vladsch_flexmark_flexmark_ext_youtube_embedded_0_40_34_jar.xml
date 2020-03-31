@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="sbt: com.vladsch.flexmark:flexmark-ext-youtube-embedded:0.40.34:jar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.ivy2/cache/com.vladsch.flexmark/flexmark-ext-youtube-embedded/jars/flexmark-ext-youtube-embedded-0.40.34.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.ivy2/cache/com.vladsch.flexmark/flexmark-ext-youtube-embedded/srcs/flexmark-ext-youtube-embedded-0.40.34-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

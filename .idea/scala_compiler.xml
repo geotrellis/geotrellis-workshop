@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ScalaCompilerConfiguration">
+    <option name="compileOrder" value="ScalaThenJava" />
+    <option name="dynamics" value="true" />
+    <option name="postfixOps" value="true" />
+    <option name="reflectiveCalls" value="true" />
+    <option name="implicitConversions" value="true" />
+    <option name="higherKinds" value="true" />
+    <option name="existentials" value="true" />
+    <option name="macros" value="true" />
+    <option name="experimental" value="true" />
+    <option name="featureWarnings" value="true" />
+    <option name="debuggingInfoLevel" value="Line" />
+    <parameters>
+      <parameter value="-Ydelambdafy:inline" />
+    </parameters>
+    <profile name="sbt 1" modules="geotrellis-workshop_5568">
+      <parameters>
+        <parameter value="-Ypartial-unification" />
+        <parameter value="-Ydelambdafy:inline" />
+        <parameter value="-target:jvm-1.8" />
+      </parameters>
+    </profile>
+    <profile name="sbt 2" modules="geotrellis-workshop">
+      <option name="postfixOps" value="true" />
+      <option name="reflectiveCalls" value="true" />
+      <option name="implicitConversions" value="true" />
+      <option name="higherKinds" value="true" />
+      <option name="existentials" value="true" />
+      <option name="macros" value="true" />
+      <option name="deprecationWarnings" value="true" />
+      <option name="uncheckedWarnings" value="true" />
+      <option name="featureWarnings" value="true" />
+      <parameters>
+        <parameter value="-Ypartial-unification" />
+        <parameter value="-Ydelambdafy:inline" />
+        <parameter value="-target:jvm-1.8" />
+      </parameters>
+    </profile>
+  </component>
+</project>

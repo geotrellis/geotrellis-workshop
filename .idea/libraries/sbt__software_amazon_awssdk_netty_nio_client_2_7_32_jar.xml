@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="sbt: software.amazon.awssdk:netty-nio-client:2.7.32:jar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.ivy2/cache/software.amazon.awssdk/netty-nio-client/jars/netty-nio-client-2.7.32.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.ivy2/cache/software.amazon.awssdk/netty-nio-client/srcs/netty-nio-client-2.7.32-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
