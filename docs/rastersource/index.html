@@ -67,7 +67,7 @@ It abstracts over file format, access schema, and reader implementation.</p>
 <pre><code class="hljs css language-scala"><span class="hljs-keyword">import</span> geotrellis.raster.geotiff.<span class="hljs-type">GeoTiffRasterSource</span>
 
 <span class="hljs-keyword">val</span> source = <span class="hljs-type">GeoTiffRasterSource</span>(<span class="hljs-string">"https://geotrellis-demo.s3.amazonaws.com/data/aspect.tif"</span>)
-<span class="hljs-comment">// source: GeoTiffRasterSource = geotrellis.raster.geotiff.GeoTiffRasterSource@3409a8d1</span>
+<span class="hljs-comment">// source: GeoTiffRasterSource = geotrellis.raster.geotiff.GeoTiffRasterSource@7cc9e5d3</span>
 
 source.extent
 <span class="hljs-comment">// res0: geotrellis.vector.Extent = Extent(</span>
@@ -107,7 +107,7 @@ source.metadata.attributes
 <span class="hljs-keyword">val</span> centerWindow = source.read(bbox)
 <span class="hljs-comment">// centerWindow: Option[Raster[MultibandTile]] = Some(</span>
 <span class="hljs-comment">//   Raster(</span>
-<span class="hljs-comment">//     geotrellis.raster.ArrayMultibandTile@2daa0660,</span>
+<span class="hljs-comment">//     geotrellis.raster.ArrayMultibandTile@6a755c97,</span>
 <span class="hljs-comment">//     Extent(633750.0, 218370.0, 641250.0, 225130.0)</span>
 <span class="hljs-comment">//   )</span>
 <span class="hljs-comment">// )</span>
@@ -117,7 +117,7 @@ centerWindow.get.dimensions
 <span class="hljs-keyword">val</span> leftCorner = source.read(<span class="hljs-type">GridBounds</span>(<span class="hljs-number">0</span>L, <span class="hljs-number">0</span>L, <span class="hljs-number">255</span>L, <span class="hljs-number">255</span>L))
 <span class="hljs-comment">// leftCorner: Option[Raster[MultibandTile]] = Some(</span>
 <span class="hljs-comment">//   Raster(</span>
-<span class="hljs-comment">//     geotrellis.raster.ArrayMultibandTile@633167fd,</span>
+<span class="hljs-comment">//     geotrellis.raster.ArrayMultibandTile@1c3674d5,</span>
 <span class="hljs-comment">//     Extent(630000.0, 225940.0, 632560.0, 228500.0)</span>
 <span class="hljs-comment">//   )</span>
 <span class="hljs-comment">// )</span>
@@ -135,7 +135,7 @@ This feature is similar to GDAL VRT, indeed <code>GDALRasterSource</code> is bac
 <span class="hljs-keyword">import</span> geotrellis.raster.resample.{ <span class="hljs-type">NearestNeighbor</span> }
 
 <span class="hljs-keyword">val</span> wgs84Source = source.reproject(<span class="hljs-type">LatLng</span>, method = <span class="hljs-type">NearestNeighbor</span>)
-<span class="hljs-comment">// wgs84Source: RasterSource = geotrellis.raster.geotiff.GeoTiffReprojectRasterSource@8994fee</span>
+<span class="hljs-comment">// wgs84Source: RasterSource = geotrellis.raster.geotiff.GeoTiffReprojectRasterSource@72ea6310</span>
 wgs84Source.extent
 <span class="hljs-comment">// res7: Extent = Extent(</span>
 <span class="hljs-comment">//   -78.7746204948163,</span>
@@ -147,7 +147,7 @@ wgs84Source.extent
 <span class="hljs-keyword">val</span> w1 = wgs84Source.read(<span class="hljs-type">Extent</span>(<span class="hljs-number">-78.68</span>, <span class="hljs-number">35.76</span>, <span class="hljs-number">-78.65</span>, <span class="hljs-number">35.78</span>))
 <span class="hljs-comment">// w1: Option[Raster[MultibandTile]] = Some(</span>
 <span class="hljs-comment">//   Raster(</span>
-<span class="hljs-comment">//     geotrellis.raster.ArrayMultibandTile@63967e9e,</span>
+<span class="hljs-comment">//     geotrellis.raster.ArrayMultibandTile@361701c,</span>
 <span class="hljs-comment">//     Extent(</span>
 <span class="hljs-comment">//       -78.68004798889035,</span>
 <span class="hljs-comment">//       35.759920477633685,</span>
@@ -166,7 +166,7 @@ This is a requirement to be able to combine two rasters in a map algebra operati
 <span class="hljs-comment">// minuteGrid: GridExtent[Int] = GridExtent(Extent(-180.0, -90.0, 180.0, 90.0),CellSize(0.016666666666666666,0.016666666666666666),21600x10800)</span>
 
 <span class="hljs-keyword">val</span> w2 = source.reprojectToGrid(<span class="hljs-type">LatLng</span>, minuteGrid.toGridType[<span class="hljs-type">Long</span>], <span class="hljs-type">NearestNeighbor</span>)
-<span class="hljs-comment">// w2: RasterSource = geotrellis.raster.geotiff.GeoTiffReprojectRasterSource@1ef2ed8a</span>
+<span class="hljs-comment">// w2: RasterSource = geotrellis.raster.geotiff.GeoTiffReprojectRasterSource@43b01503</span>
 
 w2.dimensions
 <span class="hljs-comment">// res9: Dimensions[Long] = Dimensions(11L, 8L)</span>
@@ -178,7 +178,7 @@ w2.dimensions
 <pre><code class="hljs css language-scala"><span class="hljs-keyword">import</span> geotrellis.layer._
 
 <span class="hljs-keyword">val</span> scheme = <span class="hljs-type">ZoomedLayoutScheme</span>(<span class="hljs-type">WebMercator</span>, <span class="hljs-number">256</span>)
-<span class="hljs-comment">// scheme: ZoomedLayoutScheme = geotrellis.layer.ZoomedLayoutScheme@76947f26</span>
+<span class="hljs-comment">// scheme: ZoomedLayoutScheme = geotrellis.layer.ZoomedLayoutScheme@6c8f417c</span>
 <span class="hljs-keyword">val</span> level = scheme.levelForZoom(<span class="hljs-number">14</span>)
 <span class="hljs-comment">// level: LayoutLevel = LayoutLevel(</span>
 <span class="hljs-comment">//   14,</span>
@@ -196,7 +196,7 @@ w2.dimensions
 <span class="hljs-keyword">val</span> tileSource = <span class="hljs-type">LayoutTileSource</span>.spatial(
   source = source.reprojectToGrid(<span class="hljs-type">WebMercator</span>, level.layout),
   layout = level.layout)
-<span class="hljs-comment">// tileSource: LayoutTileSource[SpatialKey] = geotrellis.layer.LayoutTileSource@3430b825</span>
+<span class="hljs-comment">// tileSource: LayoutTileSource[SpatialKey] = geotrellis.layer.LayoutTileSource@4d5c5d1e</span>
 
 tileSource.keys.take(<span class="hljs-number">3</span>)
 <span class="hljs-comment">// res10: Set[SpatialKey] = Set(</span>
@@ -207,7 +207,7 @@ tileSource.keys.take(<span class="hljs-number">3</span>)
 
 tileSource.read(<span class="hljs-type">SpatialKey</span>(<span class="hljs-number">4609</span>, <span class="hljs-number">6448</span>))
 <span class="hljs-comment">// res11: Option[MultibandTile] = Some(</span>
-<span class="hljs-comment">//   geotrellis.raster.ArrayMultibandTile@648242b3</span>
+<span class="hljs-comment">//   geotrellis.raster.ArrayMultibandTile@45352539</span>
 <span class="hljs-comment">// )</span>
 </code></pre>
 </span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/geotrellis-workshop/docs/tiles"><span class="arrow-prev">← </span><span>Tiles</span></a><a class="docs-next button" href="/geotrellis-workshop/docs/rendering-images"><span>Rendering Images</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#metadata">Metadata</a></li><li><a href="#windows">Windows</a></li><li><a href="#views">Views</a></li><li><a href="#read-tiles">Read Tiles</a></li></ul></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><a href="/geotrellis-workshop/" class="nav-home"><img src="/geotrellis-workshop/img/favicon.png" alt="GeoTrellis" width="66" height="58"/></a><div><h5>Community</h5><a href="/geotrellis-workshop/en/users.html">User Showcase</a><a target="_blank" rel="noreferrer noopener">Gitter.im</a></div><div><h5>More</h5><a href="undefined">Blog</a><a class="github-button" href="" data-icon="octicon-star" data-count-href="/locationtech/geotrellis/stargazers" data-show-count="true" data-count-aria-label="# stargazers on GitHub" aria-label="Star this project on GitHub">Star</a></div></section><section class="copyright">Copyright © 2020 Azavea</section></footer></div></body></html>
