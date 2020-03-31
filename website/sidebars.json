@@ -1,0 +1,24 @@
+{
+  "docs": {
+    "Getting Started": ["getting-started"],
+    "Vector": [
+      "vectors",
+      "projection"
+    ],
+    "Raster": [
+      "rasters",
+      "tiles",
+      "rastersource",
+      "rendering-images"
+    ],
+    "Layer": [
+      "layer-model"
+    ],
+    "Spark": [
+      "spark-basics",
+      "spark-layer-rdd",
+      "spark-indexed-layers"
+    ]
+  },
+  "docs-other": {}
+}
