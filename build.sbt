@@ -36,6 +36,15 @@ lazy val root = (project in file("."))
       "-Ydelambdafy:inline",
       "-target:jvm-1.8"
     ),
+    console / initialCommands :=
+      """
+      import geotrellis.proj4._
+      import geotrellis.vector._
+      import geotrellis.raster._
+      import geotrellis.layer._
+      import geotrellis.spark._
+      import org.apache.spark._
+      """,
     initialize ~= { _ =>
       val ansi = System.getProperty("sbt.log.noformat", "false") != "true"
       if (ansi) System.setProperty("scala.color", "true")

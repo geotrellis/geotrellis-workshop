@@ -20,7 +20,7 @@
 | **Day 2**   |                                                |
 | 9:00 AM     | Exercise: [Time Series with EO data]() |
 | 10:15       | Break                                          |
-| 10:30       | [GeoTrellis Server](): Intro and Configuration |
+| 10:30       | [GeoTrellis Server](https://github.com/geotrellis/geotrellis-server/tree/develop/ogc-example): Intro and Configuration |
 | 12:30 PM    | Lunch                                          |
 | 2:00        | [MAML](): Defining dynamic layers |
 | 2:45        | Exercise: GeoTrellis Server on existing data |
