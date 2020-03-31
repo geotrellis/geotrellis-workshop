@@ -1,0 +1,252 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Vectors · GeoTrellis</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="The [Java Topology Suite](https://github.com/locationtech/jts) has been an important and influential library in GIS vector processing."/><meta name="docsearch:language" content="en"/><meta property="og:title" content="Vectors · GeoTrellis"/><meta property="og:type" content="website"/><meta property="og:url" content="https://geotrellis.io/"/><meta property="og:description" content="The [Java Topology Suite](https://github.com/locationtech/jts) has been an important and influential library in GIS vector processing."/><meta property="og:image" content="https://geotrellis.io/img/undraw_online.svg"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="https://geotrellis.io/img/undraw_tweetstorm.svg"/><link rel="shortcut icon" href="/img/favicon.png"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css"/><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><script src="/js/scrollSpy.js"></script><link rel="stylesheet" href="/css/main.css"/><script src="/js/codetabs.js"></script></head><body class="sideNavVisible separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/"><img class="logo" src="/img/favicon.png" alt="GeoTrellis"/><h2 class="headerTitleWithLogo">GeoTrellis</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"></ul></nav></div></header></div></div><div class="navPusher singleRowMobileNav"><div class="docMainWrapper wrapper"><div class="docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><div class="hamburger-menu"><div class="line1"></div><div class="line2"></div><div class="line3"></div></div></div><h2><i>›</i><span>Vector</span></h2><div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div></div><div class="navGroups"><div class="navGroup"><h3 class="navGroupCategoryTitle">Getting Started</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/getting-started">Getting Started</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Vector</h3><ul class=""><li class="navListItem navListItemActive"><a class="navItem" href="/docs/vectors">Vectors</a></li><li class="navListItem"><a class="navItem" href="/docs/projection">Projection</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Raster</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/rasters">Rasters</a></li><li class="navListItem"><a class="navItem" href="/docs/tiles">Tiles</a></li><li class="navListItem"><a class="navItem" href="/docs/rastersource">RasterSource</a></li><li class="navListItem"><a class="navItem" href="/docs/rendering-images">Rendering Images</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Layer</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/layer-model">Layer Model</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Spark</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/spark-basics">Basics</a></li><li class="navListItem"><a class="navItem" href="/docs/spark-layer-rdd">Tile Layer RDD</a></li><li class="navListItem"><a class="navItem" href="/docs/spark-layer-ingest">Layer Ingest</a></li><li class="navListItem"><a class="navItem" href="/docs/spark-indexed-layers">Indexed Layers</a></li></ul></div></div></section></div><script>
+            var coll = document.getElementsByClassName('collapsible');
+            var checkActiveCategory = true;
+            for (var i = 0; i < coll.length; i++) {
+              var links = coll[i].nextElementSibling.getElementsByTagName('*');
+              if (checkActiveCategory){
+                for (var j = 0; j < links.length; j++) {
+                  if (links[j].classList.contains('navListItemActive')){
+                    coll[i].nextElementSibling.classList.toggle('hide');
+                    coll[i].childNodes[1].classList.toggle('rotate');
+                    checkActiveCategory = false;
+                    break;
+                  }
+                }
+              }
+
+              coll[i].addEventListener('click', function() {
+                var arrow = this.childNodes[1];
+                arrow.classList.toggle('rotate');
+                var content = this.nextElementSibling;
+                content.classList.toggle('hide');
+              });
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+              createToggler('#navToggler', '#docsNav', 'docsSliderActive');
+              createToggler('#tocToggler', 'body', 'tocActive');
+
+              var headings = document.querySelector('.toc-headings');
+              headings && headings.addEventListener('click', function(event) {
+                var el = event.target;
+                while(el !== headings){
+                  if (el.tagName === 'A') {
+                    document.body.classList.remove('tocActive');
+                    break;
+                  } else{
+                    el = el.parentNode;
+                  }
+                }
+              }, false);
+
+              function createToggler(togglerSelector, targetSelector, className) {
+                var toggler = document.querySelector(togglerSelector);
+                var target = document.querySelector(targetSelector);
+
+                if (!toggler) {
+                  return;
+                }
+
+                toggler.onclick = function(event) {
+                  event.preventDefault();
+
+                  target.classList.toggle(className);
+                };
+              }
+            });
+        </script></nav></div><div class="container mainContainer docsContainer"><div class="wrapper"><div class="post"><header class="postHeader"><h1 id="__docusaurus" class="postHeaderTitle">Vectors</h1></header><article><div><span><p>The <a href="https://github.com/locationtech/jts">Java Topology Suite</a> has been an important and influential library in GIS vector processing.
+It is something of a standard on the JVM and has even been ported to C as <a href="https://www.osgeo.org/projects/geos/">GEOS</a>.
+Instead of reinventing the wheel, GeoTrellis uses JTS as the foundation of its vector module - any GeoTrellis <code>Geometry</code> is really a JTS <code>Geometry</code> underneath.</p>
+<h2><a class="anchor" aria-hidden="true" id="construction"></a><a href="#construction" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Construction</h2>
+<p>To get a sense for why GeoTrellis vector has introduced geometry utilities, compare this example of creating a <code>Point</code> with the standard JTS API to the GeoTrellis code below it which creates the same type.</p>
+<pre><code class="hljs css language-scala"><span class="hljs-comment">// with JTS</span>
+<span class="hljs-keyword">import</span> org.locationtech.jts
+<span class="hljs-keyword">val</span> gFactory = <span class="hljs-keyword">new</span> jts.geom.<span class="hljs-type">GeometryFactory</span>()
+<span class="hljs-comment">// gFactory: jts.geom.GeometryFactory = org.locationtech.jts.geom.GeometryFactory@34ed5f</span>
+<span class="hljs-keyword">val</span> coord = <span class="hljs-keyword">new</span> jts.geom.<span class="hljs-type">Coordinate</span>(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>)
+<span class="hljs-comment">// coord: jts.geom.Coordinate = (0.0, 0.0, NaN)</span>
+<span class="hljs-keyword">val</span> jtsPoint = gFactory.createPoint(coord)
+<span class="hljs-comment">// jtsPoint: jts.geom.Point = POINT (0 0)</span>
+</code></pre>
+<pre><code class="hljs css language-scala"><span class="hljs-comment">// with GeoTrellis</span>
+<span class="hljs-keyword">import</span> geotrellis.vector._
+<span class="hljs-keyword">val</span> point = <span class="hljs-type">Point</span>(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>)
+<span class="hljs-comment">// point: Point = POINT (0 0)</span>
+</code></pre>
+<h3><a class="anchor" aria-hidden="true" id="managing-types"></a><a href="#managing-types" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Managing types</h3>
+<pre><code class="hljs css language-scala">point
+<span class="hljs-comment">// res0: Point = POINT (0 0)</span>
+point.geom
+<span class="hljs-comment">// res1: Geometry = POINT (0 0)</span>
+</code></pre>
+<p>The values returned appear to be the same (<code>POINT (0 0)</code>).
+But take note of the types and things seem to have come apart: we get <code>Point</code> and <code>Geometry</code>.
+In general when writing Scala, but especially important when working with the <code>geotrellis.vector</code> package.
+Remember to always pay attention to the types!</p>
+<p>The <code>.geom</code> method allows specific vector types (e.g. <code>Point</code>, <code>Line</code>, <code>Polygon</code>) to be upcast to their <code>Geometry</code> supertype.
+Going the other direction (e.g. <code>Geometry</code> =&gt; <code>Point</code>) is slightly more involved and looks quite a bit like downcasting in scala generally.
+Examples of downcasting are provided below and listed from least to most safe.</p>
+<pre><code class="hljs css language-scala"><span class="hljs-comment">// Erasing type specificity (Point =&gt; Geometry)</span>
+<span class="hljs-keyword">val</span> theGeom: <span class="hljs-type">Geometry</span> = point.geom
+<span class="hljs-comment">// theGeom: Geometry = POINT (0 0)</span>
+
+<span class="hljs-comment">// Dangerous! (runtime errors)</span>
+theGeom.asInstanceOf[<span class="hljs-type">Point</span>]
+<span class="hljs-comment">// res2: Point = POINT (0 0)</span>
+
+<span class="hljs-comment">// Safe-ish (custom error thrown)</span>
+theGeom <span class="hljs-keyword">match</span> {
+  <span class="hljs-keyword">case</span> p: <span class="hljs-type">Point</span> =&gt; p
+  <span class="hljs-keyword">case</span> _ =&gt;
+    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> java.lang.<span class="hljs-type">IllegalStateException</span>(<span class="hljs-string">"This can only be a point"</span>)
+}
+<span class="hljs-comment">// res3: Point = POINT (0 0)</span>
+
+<span class="hljs-comment">// Safer (can't throw) + More Idiomatic</span>
+theGeom <span class="hljs-keyword">match</span> {
+  <span class="hljs-keyword">case</span> p: <span class="hljs-type">Point</span> =&gt; <span class="hljs-type">Some</span>(p)
+  <span class="hljs-keyword">case</span> _ =&gt; <span class="hljs-type">None</span>
+}
+<span class="hljs-comment">// res4: Option[Point] = Some(POINT (0 0))</span>
+</code></pre>
+<h3><a class="anchor" aria-hidden="true" id="advanced-construction-options"></a><a href="#advanced-construction-options" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Advanced Construction Options</h3>
+<p>JTS, like many Java libraries, requires a bit more ceremony to begin creating objects than is typical in Scala.
+Configuration details which are handled by JTS through parameterization of the <code>org.locationtech.jts.geom.GeometryFactory</code> have been given a sensible defaults which are automatically leveraged by geometry creation helper functions.
+These defaults can be changed by providing a configuration file to override the <a href="https://github.com/locationtech/geotrellis/blob/master/vector/src/main/resources/reference.conf">default configuration</a>.
+Settings are picked up when the application starts and should transparently modify geometry creation.</p>
+<h2><a class="anchor" aria-hidden="true" id="spatial-methods"></a><a href="#spatial-methods" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Spatial Methods</h2>
+<h3><a class="anchor" aria-hidden="true" id="spatial-predicates"></a><a href="#spatial-predicates" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Spatial Predicates</h3>
+<p>All <a href="https://en.wikipedia.org/wiki/DE-9IM">DE-9IM</a> spatial predicates are provided by JTS as methods on <code>Geometry</code>.</p>
+<pre><code class="hljs css language-scala"><span class="hljs-keyword">val</span> line = <span class="hljs-type">LineString</span>(<span class="hljs-type">Point</span>(<span class="hljs-number">-1</span>, <span class="hljs-number">-1</span>), <span class="hljs-type">Point</span>(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>))
+<span class="hljs-comment">// line: LineString = LINESTRING (-1 -1, 1 1)</span>
+line.covers(line)
+<span class="hljs-comment">// res5: Boolean = true</span>
+</code></pre>
+<p>In Scala, language features allow us to write methods as infix operators which makes the JTS API even more readable</p>
+<pre><code class="hljs css language-scala">point covers point
+<span class="hljs-comment">// res6: Boolean = true</span>
+</code></pre>
+<h3><a class="anchor" aria-hidden="true" id="set-operators-union-difference-intersection"></a><a href="#set-operators-union-difference-intersection" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Set Operators: Union, Difference, Intersection</h3>
+<p>Unlike predicates, which always return <code>true</code> or <code>false</code> regardless of input, <code>union</code>, <code>difference</code>, and <code>intersection</code> result types vary with their inputs.
+To model the complexity of these results, GeoTrellis provides the <code>GeometryResult</code> and subtypes which helps the compiler know which cases need to be handled.
+Users may choose between the normal JTS API or the more type-literate <code>geotrellis.vector</code> API.</p>
+<h4><a class="anchor" aria-hidden="true" id="weakly-typed-jts-api"></a><a href="#weakly-typed-jts-api" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Weakly Typed (JTS API)</h4>
+<p>For JTS, the result type of any <code>union</code>, <code>difference</code>, or <code>intersection</code> will simply be a <code>Geometry</code>.</p>
+<pre><code class="hljs css language-scala">point intersection line
+<span class="hljs-comment">// res7: Geometry = POINT (0 0)</span>
+point union line
+<span class="hljs-comment">// res8: Geometry = LINESTRING (-1 -1, 1 1)</span>
+point difference line
+<span class="hljs-comment">// res9: Geometry = POINT EMPTY</span>
+</code></pre>
+<h4><a class="anchor" aria-hidden="true" id="typed-api-gt-api"></a><a href="#typed-api-gt-api" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Typed API (GT API)</h4>
+<p>Using the more heavily typed API, <code>intersection</code> is <code>&amp;</code>; <code>union</code> is <code>|</code>; and difference is <code>-</code>.
+Instead of Geometries, these methods return <code>GeometryResult</code>s which allow the compiler to know a little bit more about what kinds of result are even possible.
+There are too many <code>GeometryResult</code> classes to list them all.
+As an example, the type <code>PointOrNoResult</code> is returned whenever a set operator applied to two <code>Geometry</code>s can only return a <code>Point</code> or <code>NoResult</code> (in case it is empty).</p>
+<pre><code class="hljs css language-scala">point &amp; line
+<span class="hljs-comment">// res10: PointOrNoResult = PointResult(POINT (0 0))</span>
+point | line
+<span class="hljs-comment">// res11: ZeroDimensionsLineStringUnionResult = LineStringResult(</span>
+<span class="hljs-comment">//   LINESTRING (-1 -1, 1 1)</span>
+<span class="hljs-comment">// )</span>
+point - line
+<span class="hljs-comment">// res12: PointGeometryDifferenceResult = NoResult</span>
+</code></pre>
+<blockquote>
+<p>In the above code, note that the type looks a bit different than the value (<code>PointOrNoResult</code> doesn't appear to be the same as <code>PointResult</code>).
+This is because the compiler can only know that the result is <em>some</em> <code>PointOrNoResult</code>
+The specific underlying value of said type (<code>Point</code> or <code>NoResult</code>) can't be determined until runtime.</p>
+</blockquote>
+<h2><a class="anchor" aria-hidden="true" id="projected-geometry"></a><a href="#projected-geometry" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Projected Geometry</h2>
+<p>Vectors do not, themselves, keep track of the projection in which their units are correctly defined.
+This means that it is up to users to keep track of projections and to ensure that comparisons are not naively carried out between vectors whose points' coordinates are in different projections.</p>
+<p>Below, we've got a latitude/longitude projected <code>Point</code> (defined in terms of arcseconds) and want to determine its location under the Web Mercator projection.</p>
+<pre><code class="hljs css language-scala"><span class="hljs-keyword">import</span> geotrellis.proj4.{<span class="hljs-type">LatLng</span>, <span class="hljs-type">WebMercator</span>}
+<span class="hljs-keyword">val</span> llPoint = <span class="hljs-type">Point</span>(<span class="hljs-number">80</span>, <span class="hljs-number">80</span>)
+<span class="hljs-comment">// llPoint: Point = POINT (80 80)</span>
+<span class="hljs-keyword">val</span> wmPoint = llPoint.reproject(<span class="hljs-type">LatLng</span>, <span class="hljs-type">WebMercator</span>)
+<span class="hljs-comment">// wmPoint: Point = POINT (8905559.263461886 15538711.096309226)</span>
+</code></pre>
+<p>For more, refer to the section on <a href="/docs/projection">map projections</a></p>
+<h2><a class="anchor" aria-hidden="true" id="features"></a><a href="#features" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Features</h2>
+<p>Vectors are usually not consumed by themselves.
+Instead, they will generally label otherwise interesting tracts and include properties which correspond to said tracts.
+Consider the case of US Census data: Census Block polygons have attached racial and economic breakdowns of the regions they correspond to.
+Such shape + property pairings are known as features and represented within GeoTrellis as <code>geotrellis.vector.Feature</code>s.</p>
+<h3><a class="anchor" aria-hidden="true" id="feature-creation"></a><a href="#feature-creation" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Feature Creation</h3>
+<p>At the lowest level, <code>Feature</code> is little more than a tuple of some <code>G</code> such that <code>G</code> is a <code>Geometry</code> (or <code>G &lt;: Geometry</code> as it is written in Scala) and any type <code>D</code>.</p>
+<pre><code class="hljs css language-scala"><span class="hljs-type">Feature</span>[<span class="hljs-type">Point</span>, <span class="hljs-type">String</span>](point, <span class="hljs-string">"extra data"</span>)
+<span class="hljs-comment">// res13: Feature[Point, String] = Feature(POINT (0 0), "extra data")</span>
+</code></pre>
+<p>There also exist helper constructors which fix <code>G</code> while allowing <code>D</code> to vary:</p>
+<pre><code class="hljs css language-scala"><span class="hljs-type">PointFeature</span>[<span class="hljs-type">String</span>](point, <span class="hljs-string">"point with string"</span>)
+<span class="hljs-comment">// res14: Feature[Point, String] = Feature(POINT (0 0), "point with string")</span>
+<span class="hljs-type">LineStringFeature</span>[<span class="hljs-type">String</span>](line, <span class="hljs-string">"just a line with a string"</span>)
+<span class="hljs-comment">// res15: Feature[LineString, String] = Feature(</span>
+<span class="hljs-comment">//   LINESTRING (-1 -1, 1 1),</span>
+<span class="hljs-comment">//   "just a line with a string"</span>
+<span class="hljs-comment">// )</span>
+</code></pre>
+<h3><a class="anchor" aria-hidden="true" id="features-and-json"></a><a href="#features-and-json" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Features and JSON</h3>
+<p>The most common GIS application is probably the 'dots on a map' representation of locations as markers pinned into appropriate locations.
+Polygon choropleths are likely a close second.
+Both of these cases depend on reading spatial data and its non-spatial correlates to determine what information should be displayed.
+This is why <code>Feature</code> exists.</p>
+<p>Due to the regular need to ship features from database to client or from client to server, the standards for sending and receiving geometries are widely adopted and well documented.
+Chief among the standards developed for exactly this need is <a href="https://geojson.org/">GeoJson</a></p>
+<blockquote>
+<p>Circe encoders/decoders have been provided for many of the types within GeoTrellis.
+Before you can use these, however, <code>io.circe.syntax._</code> <em>must</em> be imported to pick up the necessary implicits.</p>
+</blockquote>
+<pre><code class="hljs css language-scala"><span class="hljs-keyword">import</span> _root_.io.circe.syntax._
+<span class="hljs-type">Point</span>(<span class="hljs-number">12</span>, <span class="hljs-number">34</span>).asJson.noSpaces
+<span class="hljs-comment">// res16: String = "{\"type\":\"Point\",\"coordinates\":[12.0,34.0]}"</span>
+</code></pre>
+<h4><a class="anchor" aria-hidden="true" id="feature-serialization"></a><a href="#feature-serialization" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Feature Serialization</h4>
+<p>To serialize <code>Feature</code> records into GeoJson, it is necessary to implement a Circe <code>Encoder</code> for data type <code>D</code> (not the geometry, <code>G</code>).</p>
+<blockquote>
+<p>Circe is a great library for managing serde of JSON data and a great example of designing types to assist the compiler in reporting bugs before they happen.
+As nice as all that is, Circe is primarily a JSON library and is focused on avoiding invalid JSON.
+GeoJson, as a subset of JSON, isn't necessarily valid for any given instance of JSON.
+As a result, it is technically possible to produce an invalid <code>properties</code> field on the <code>Feature</code>'s serialized output (properties must be an object to be valid GeoJson, a <code>String</code> alone won't cut it):</p>
+</blockquote>
+<pre><code class="hljs css language-scala"><span class="hljs-type">Feature</span>(<span class="hljs-type">Point</span>(<span class="hljs-number">12</span>, <span class="hljs-number">34</span>), <span class="hljs-string">"stringTest"</span>).asJson.noSpaces
+<span class="hljs-comment">// res17: String = "{\"type\":\"Feature\",\"geometry\":{\"type\":\"Point\",\"coordinates\":[12.0,34.0]},\"bbox\":[12.0,34.0,12.0,34.0],\"properties\":\"stringTest\"}"</span>
+</code></pre>
+<p>The easiest way to construct valid GeoJson is to construct a case class which has all the properties to be stored in a <code>Feature</code>.
+Below, a simple case class, <code>PropertyData</code>, is used and an encoder/decoder pair is generated for this class.
+Output JSON will keep properties in the context of a javascript object <code>{}</code></p>
+<pre><code class="hljs css language-scala"><span class="hljs-keyword">import</span> _root_.io.circe._
+<span class="hljs-keyword">import</span> _root_.io.circe.generic.semiauto._
+<span class="hljs-keyword">case</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">PropertyData</span>(<span class="hljs-params">str: <span class="hljs-type">String</span></span>)</span>
+<span class="hljs-keyword">implicit</span> <span class="hljs-keyword">val</span> encoder: <span class="hljs-type">Encoder</span>[<span class="hljs-type">PropertyData</span>] = deriveEncoder[<span class="hljs-type">PropertyData</span>]
+<span class="hljs-comment">// encoder: Encoder[PropertyData] = io.circe.generic.encoding.DerivedAsObjectEncoder$$anon$1@6cabfa3c</span>
+
+<span class="hljs-keyword">val</span> featureString =
+  <span class="hljs-type">Feature</span>(<span class="hljs-type">Point</span>(<span class="hljs-number">12</span>, <span class="hljs-number">34</span>), <span class="hljs-type">PropertyData</span>(<span class="hljs-string">"stringTest"</span>)).asJson.noSpaces
+<span class="hljs-comment">// featureString: String = "{\"type\":\"Feature\",\"geometry\":{\"type\":\"Point\",\"coordinates\":[12.0,34.0]},\"bbox\":[12.0,34.0,12.0,34.0],\"properties\":{\"str\":\"stringTest\"}}"</span>
+featureString
+<span class="hljs-comment">// res18: String = "{\"type\":\"Feature\",\"geometry\":{\"type\":\"Point\",\"coordinates\":[12.0,34.0]},\"bbox\":[12.0,34.0,12.0,34.0],\"properties\":{\"str\":\"stringTest\"}}"</span>
+</code></pre>
+<h4><a class="anchor" aria-hidden="true" id="feature-deserialization"></a><a href="#feature-deserialization" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Feature Deserialization</h4>
+<p>Deserialization demands that we have a Circe <code>Decoder</code> rather than an <code>Encoder</code>.
+The other added complexity is that we must extract results from an <code>Either</code> which will contain (<code>Right</code> side) success or else (<code>Left</code> side) a description of what went wrong.</p>
+<pre><code class="hljs css language-scala"><span class="hljs-keyword">import</span> _root_.io.circe.parser.decode
+<span class="hljs-keyword">implicit</span> <span class="hljs-keyword">val</span> decoder: <span class="hljs-type">Decoder</span>[<span class="hljs-type">PropertyData</span>] =
+  deriveDecoder[<span class="hljs-type">PropertyData</span>]
+<span class="hljs-comment">// decoder: Decoder[PropertyData] = io.circe.generic.decoding.DerivedDecoder$$anon$1@6be8782f</span>
+
+<span class="hljs-comment">// getting data out of the Either</span>
+decode[<span class="hljs-type">Feature</span>[<span class="hljs-type">Point</span>, <span class="hljs-type">PropertyData</span>]](featureString) <span class="hljs-keyword">match</span> {
+  <span class="hljs-keyword">case</span> <span class="hljs-type">Right</span>(feature) =&gt; <span class="hljs-comment">// Success</span>
+    feature
+  <span class="hljs-keyword">case</span> <span class="hljs-type">Left</span>(exception) =&gt; <span class="hljs-comment">// Failure + error msg</span>
+    <span class="hljs-keyword">throw</span> exception
+}
+<span class="hljs-comment">// res19: Feature[Point, PropertyData] = Feature(</span>
+<span class="hljs-comment">//   POINT (12 34),</span>
+<span class="hljs-comment">//   PropertyData("stringTest")</span>
+<span class="hljs-comment">// )</span>
+</code></pre>
+</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/docs/getting-started"><span class="arrow-prev">← </span><span>Getting Started</span></a><a class="docs-next button" href="/docs/projection"><span>Projection</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#construction">Construction</a><ul class="toc-headings"><li><a href="#managing-types">Managing types</a></li><li><a href="#advanced-construction-options">Advanced Construction Options</a></li></ul></li><li><a href="#spatial-methods">Spatial Methods</a><ul class="toc-headings"><li><a href="#spatial-predicates">Spatial Predicates</a></li><li><a href="#set-operators-union-difference-intersection">Set Operators: Union, Difference, Intersection</a></li></ul></li><li><a href="#projected-geometry">Projected Geometry</a></li><li><a href="#features">Features</a><ul class="toc-headings"><li><a href="#feature-creation">Feature Creation</a></li><li><a href="#features-and-json">Features and JSON</a></li></ul></li></ul></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><a href="/" class="nav-home"><img src="/img/favicon.png" alt="GeoTrellis" width="66" height="58"/></a><div><h5>Community</h5><a href="/en/users.html">User Showcase</a><a target="_blank" rel="noreferrer noopener">Gitter.im</a></div><div><h5>More</h5><a href="undefined">Blog</a><a class="github-button" href="" data-icon="octicon-star" data-count-href="/locationtech/geotrellis/stargazers" data-show-count="true" data-count-aria-label="# stargazers on GitHub" aria-label="Star this project on GitHub">Star</a></div></section><section class="copyright">Copyright © 2020 Azavea</section></footer></div></body></html>

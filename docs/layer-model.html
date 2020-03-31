@@ -1,0 +1,159 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Layer Model · GeoTrellis</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="`SpatialKey` refers to a tile in a `LayoutDefinition`, a regular grid of tiles covering a geographic area:"/><meta name="docsearch:language" content="en"/><meta property="og:title" content="Layer Model · GeoTrellis"/><meta property="og:type" content="website"/><meta property="og:url" content="https://geotrellis.io/"/><meta property="og:description" content="`SpatialKey` refers to a tile in a `LayoutDefinition`, a regular grid of tiles covering a geographic area:"/><meta property="og:image" content="https://geotrellis.io/img/undraw_online.svg"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="https://geotrellis.io/img/undraw_tweetstorm.svg"/><link rel="shortcut icon" href="/img/favicon.png"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css"/><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><script src="/js/scrollSpy.js"></script><link rel="stylesheet" href="/css/main.css"/><script src="/js/codetabs.js"></script></head><body class="sideNavVisible separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/"><img class="logo" src="/img/favicon.png" alt="GeoTrellis"/><h2 class="headerTitleWithLogo">GeoTrellis</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"></ul></nav></div></header></div></div><div class="navPusher singleRowMobileNav"><div class="docMainWrapper wrapper"><div class="docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><div class="hamburger-menu"><div class="line1"></div><div class="line2"></div><div class="line3"></div></div></div><h2><i>›</i><span>Layer</span></h2><div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div></div><div class="navGroups"><div class="navGroup"><h3 class="navGroupCategoryTitle">Getting Started</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/getting-started">Getting Started</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Vector</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/vectors">Vectors</a></li><li class="navListItem"><a class="navItem" href="/docs/projection">Projection</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Raster</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/rasters">Rasters</a></li><li class="navListItem"><a class="navItem" href="/docs/tiles">Tiles</a></li><li class="navListItem"><a class="navItem" href="/docs/rastersource">RasterSource</a></li><li class="navListItem"><a class="navItem" href="/docs/rendering-images">Rendering Images</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Layer</h3><ul class=""><li class="navListItem navListItemActive"><a class="navItem" href="/docs/layer-model">Layer Model</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Spark</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/spark-basics">Basics</a></li><li class="navListItem"><a class="navItem" href="/docs/spark-layer-rdd">Tile Layer RDD</a></li><li class="navListItem"><a class="navItem" href="/docs/spark-layer-ingest">Layer Ingest</a></li><li class="navListItem"><a class="navItem" href="/docs/spark-indexed-layers">Indexed Layers</a></li></ul></div></div></section></div><script>
+            var coll = document.getElementsByClassName('collapsible');
+            var checkActiveCategory = true;
+            for (var i = 0; i < coll.length; i++) {
+              var links = coll[i].nextElementSibling.getElementsByTagName('*');
+              if (checkActiveCategory){
+                for (var j = 0; j < links.length; j++) {
+                  if (links[j].classList.contains('navListItemActive')){
+                    coll[i].nextElementSibling.classList.toggle('hide');
+                    coll[i].childNodes[1].classList.toggle('rotate');
+                    checkActiveCategory = false;
+                    break;
+                  }
+                }
+              }
+
+              coll[i].addEventListener('click', function() {
+                var arrow = this.childNodes[1];
+                arrow.classList.toggle('rotate');
+                var content = this.nextElementSibling;
+                content.classList.toggle('hide');
+              });
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+              createToggler('#navToggler', '#docsNav', 'docsSliderActive');
+              createToggler('#tocToggler', 'body', 'tocActive');
+
+              var headings = document.querySelector('.toc-headings');
+              headings && headings.addEventListener('click', function(event) {
+                var el = event.target;
+                while(el !== headings){
+                  if (el.tagName === 'A') {
+                    document.body.classList.remove('tocActive');
+                    break;
+                  } else{
+                    el = el.parentNode;
+                  }
+                }
+              }, false);
+
+              function createToggler(togglerSelector, targetSelector, className) {
+                var toggler = document.querySelector(togglerSelector);
+                var target = document.querySelector(targetSelector);
+
+                if (!toggler) {
+                  return;
+                }
+
+                toggler.onclick = function(event) {
+                  event.preventDefault();
+
+                  target.classList.toggle(className);
+                };
+              }
+            });
+        </script></nav></div><div class="container mainContainer docsContainer"><div class="wrapper"><div class="post"><header class="postHeader"><h1 id="__docusaurus" class="postHeaderTitle">Layer Model</h1></header><article><div><span><p><code>SpatialKey</code> refers to a tile in a <code>LayoutDefinition</code>, a regular grid of tiles covering a geographic area:</p>
+<p><img src="/docs/assets/layer-model-layout.png" alt="LayoutDefinition Diagram"></p>
+<p>Note that the spatial keys are indexed from upper left while map bounding box is indexed from lower left. The spatial key convention is consistent with pixel column and row indexes of a raster while the map convention is conistent with cartisian (X,Y) plane. <code>SpatialKey</code> instances has a map position only through corresponding <code>LayoutDefinition</code>.</p>
+<pre><code class="hljs css language-scala"><span class="hljs-keyword">import</span> geotrellis.layer.{ <span class="hljs-type">LayoutDefinition</span>, <span class="hljs-type">SpatialKey</span> }
+<span class="hljs-keyword">import</span> geotrellis.raster.<span class="hljs-type">GridExtent</span>
+<span class="hljs-keyword">import</span> geotrellis.vector.{ <span class="hljs-type">Extent</span>, <span class="hljs-type">Point</span>, <span class="hljs-type">LineString</span> }
+
+<span class="hljs-keyword">val</span> layout = <span class="hljs-type">LayoutDefinition</span>(
+  grid = <span class="hljs-type">GridExtent</span>(<span class="hljs-type">Extent</span>(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">100</span>, <span class="hljs-number">100</span>), cols = <span class="hljs-number">100</span>, rows = <span class="hljs-number">100</span>),
+  tileCols = <span class="hljs-number">10</span>, tileRows = <span class="hljs-number">10</span>
+)
+<span class="hljs-comment">// layout: LayoutDefinition = LayoutDefinition(</span>
+<span class="hljs-comment">//   Extent(0.0, 0.0, 100.0, 100.0),</span>
+<span class="hljs-comment">//   TileLayout(10, 10, 10, 10)</span>
+<span class="hljs-comment">// )</span>
+
+<span class="hljs-comment">// lower left, upper left, upper right, lower right:</span>
+<span class="hljs-type">SpatialKey</span>(<span class="hljs-number">0</span>, <span class="hljs-number">9</span>).extent(layout)
+<span class="hljs-comment">// res0: Extent = Extent(0.0, 0.0, 10.0, 10.0)</span>
+<span class="hljs-type">SpatialKey</span>(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>).extent(layout)
+<span class="hljs-comment">// res1: Extent = Extent(0.0, 90.0, 10.0, 100.0)</span>
+<span class="hljs-type">SpatialKey</span>(<span class="hljs-number">9</span>, <span class="hljs-number">0</span>).extent(layout)
+<span class="hljs-comment">// res2: Extent = Extent(90.0, 90.0, 100.0, 100.0)</span>
+<span class="hljs-type">SpatialKey</span>(<span class="hljs-number">9</span>, <span class="hljs-number">9</span>).extent(layout)
+<span class="hljs-comment">// res3: Extent = Extent(90.0, 0.0, 100.0, 10.0)</span>
+</code></pre>
+<p><code>MapKeyTransform</code> instance on <code>LayoutDefinition</code> has various utility methods to transition from tile addressing to map addressing:</p>
+<pre><code class="hljs css language-scala">layout.mapTransform.pointToKey(<span class="hljs-type">Point</span>(<span class="hljs-number">5</span>, <span class="hljs-number">5</span>))
+<span class="hljs-comment">// res4: SpatialKey = SpatialKey(0, 9)</span>
+layout.mapTransform.pointToKey(<span class="hljs-type">Point</span>(<span class="hljs-number">15</span>, <span class="hljs-number">15</span>))
+<span class="hljs-comment">// res5: SpatialKey = SpatialKey(1, 8)</span>
+layout.mapTransform.keyToExtent(<span class="hljs-type">SpatialKey</span>(<span class="hljs-number">1</span>,<span class="hljs-number">8</span>))
+<span class="hljs-comment">// res6: Extent = Extent(10.0, 10.0, 20.0, 20.0)</span>
+layout.mapTransform.extentToBounds(<span class="hljs-type">Extent</span>(<span class="hljs-number">5</span>, <span class="hljs-number">5</span>, <span class="hljs-number">15</span>, <span class="hljs-number">15</span>))
+<span class="hljs-comment">// res7: geotrellis.layer.package.TileBounds = GridBounds(0, 8, 1, 9)</span>
+layout.mapTransform.keysForGeometry(<span class="hljs-type">LineString</span>(<span class="hljs-type">Point</span>(<span class="hljs-number">5</span>,<span class="hljs-number">5</span>), <span class="hljs-type">Point</span>(<span class="hljs-number">25</span>,<span class="hljs-number">5</span>)))
+<span class="hljs-comment">// res8: Set[SpatialKey] = Set(</span>
+<span class="hljs-comment">//   SpatialKey(2, 9),</span>
+<span class="hljs-comment">//   SpatialKey(1, 9),</span>
+<span class="hljs-comment">//   SpatialKey(0, 9)</span>
+<span class="hljs-comment">// )</span>
+</code></pre>
+<p>Webmaps use a tile pyramid where each zoom level produce a power of two reduction in map pixel count. You can use <code>ZoomedLayoutScheme</code> to generate layout definitions.</p>
+<pre><code class="hljs css language-scala"><span class="hljs-keyword">import</span> geotrellis.layer.<span class="hljs-type">ZoomedLayoutScheme</span>
+<span class="hljs-keyword">import</span> geotrellis.proj4.<span class="hljs-type">WebMercator</span>
+
+<span class="hljs-keyword">val</span> scheme = <span class="hljs-type">ZoomedLayoutScheme</span>(<span class="hljs-type">WebMercator</span>, tileSize = <span class="hljs-number">256</span>)
+<span class="hljs-comment">// scheme: ZoomedLayoutScheme = geotrellis.layer.ZoomedLayoutScheme@6ddbad79</span>
+
+<span class="hljs-keyword">val</span> zoom7 = scheme.levelForZoom(<span class="hljs-number">7</span>).layout
+<span class="hljs-comment">// zoom7: LayoutDefinition = LayoutDefinition(</span>
+<span class="hljs-comment">//   Extent(</span>
+<span class="hljs-comment">//     -2.0037508342789244E7,</span>
+<span class="hljs-comment">//     -2.0037508342789244E7,</span>
+<span class="hljs-comment">//     2.0037508342789244E7,</span>
+<span class="hljs-comment">//     2.0037508342789244E7</span>
+<span class="hljs-comment">//   ),</span>
+<span class="hljs-comment">//   TileLayout(128, 128, 256, 256)</span>
+<span class="hljs-comment">// )</span>
+<span class="hljs-keyword">val</span> zoom8 = scheme.levelForZoom(<span class="hljs-number">8</span>).layout
+<span class="hljs-comment">// zoom8: LayoutDefinition = LayoutDefinition(</span>
+<span class="hljs-comment">//   Extent(</span>
+<span class="hljs-comment">//     -2.0037508342789244E7,</span>
+<span class="hljs-comment">//     -2.0037508342789244E7,</span>
+<span class="hljs-comment">//     2.0037508342789244E7,</span>
+<span class="hljs-comment">//     2.0037508342789244E7</span>
+<span class="hljs-comment">//   ),</span>
+<span class="hljs-comment">//   TileLayout(256, 256, 256, 256)</span>
+<span class="hljs-comment">// )</span>
+
+<span class="hljs-keyword">val</span> ottawaWM = <span class="hljs-type">Extent</span>(<span class="hljs-number">-8621691</span>, <span class="hljs-number">5604373</span>, <span class="hljs-number">-8336168</span>, <span class="hljs-number">5805297</span>)
+<span class="hljs-comment">// ottawaWM: Extent = Extent(-8621691.0, 5604373.0, -8336168.0, 5805297.0)</span>
+<span class="hljs-keyword">val</span> tileBounds = zoom7.mapTransform.extentToBounds(ottawaWM)
+<span class="hljs-comment">// tileBounds: geotrellis.layer.package.TileBounds = GridBounds(36, 45, 37, 46)</span>
+<span class="hljs-keyword">val</span> tileExtent = zoom7.mapTransform.boundsToExtent(tileBounds)
+<span class="hljs-comment">// tileExtent: Extent = Extent(</span>
+<span class="hljs-comment">//   -8766409.899970295,</span>
+<span class="hljs-comment">//   5322463.153553393,</span>
+<span class="hljs-comment">//   -8140237.7642581295,</span>
+<span class="hljs-comment">//   5948635.289265556</span>
+<span class="hljs-comment">// )</span>
+
+<span class="hljs-comment">// Note that this is snapping out extent to closest tile borders</span>
+tileExtent.contains(ottawaWM)
+<span class="hljs-comment">// res9: Boolean = true</span>
+ottawaWM.contains(tileExtent)
+<span class="hljs-comment">// res10: Boolean = false</span>
+
+<span class="hljs-comment">// These X/Y keys will cover Ottawa on a slippy map at zoom 7</span>
+zoom8.mapTransform.keysForGeometry(ottawaWM.toPolygon())
+<span class="hljs-comment">// res11: Set[SpatialKey] = Set(</span>
+<span class="hljs-comment">//   SpatialKey(74, 91),</span>
+<span class="hljs-comment">//   SpatialKey(72, 92),</span>
+<span class="hljs-comment">//   SpatialKey(72, 90),</span>
+<span class="hljs-comment">//   SpatialKey(74, 92),</span>
+<span class="hljs-comment">//   SpatialKey(73, 91),</span>
+<span class="hljs-comment">//   SpatialKey(73, 90),</span>
+<span class="hljs-comment">//   SpatialKey(74, 90),</span>
+<span class="hljs-comment">//   SpatialKey(72, 91),</span>
+<span class="hljs-comment">//   SpatialKey(73, 92)</span>
+<span class="hljs-comment">// )</span>
+</code></pre>
+</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/docs/rendering-images"><span class="arrow-prev">← </span><span>Rendering Images</span></a><a class="docs-next button" href="/docs/spark-basics"><span>Basics</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav"></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><a href="/" class="nav-home"><img src="/img/favicon.png" alt="GeoTrellis" width="66" height="58"/></a><div><h5>Community</h5><a href="/en/users.html">User Showcase</a><a target="_blank" rel="noreferrer noopener">Gitter.im</a></div><div><h5>More</h5><a href="undefined">Blog</a><a class="github-button" href="" data-icon="octicon-star" data-count-href="/locationtech/geotrellis/stargazers" data-show-count="true" data-count-aria-label="# stargazers on GitHub" aria-label="Star this project on GitHub">Star</a></div></section><section class="copyright">Copyright © 2020 Azavea</section></footer></div></body></html>

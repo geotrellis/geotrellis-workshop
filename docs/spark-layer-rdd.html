@@ -1,0 +1,139 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Tile Layer RDD · GeoTrellis</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="![GeoTrellis Layer](/docs/assets/spark-tile-layer-partitions.png)"/><meta name="docsearch:language" content="en"/><meta property="og:title" content="Tile Layer RDD · GeoTrellis"/><meta property="og:type" content="website"/><meta property="og:url" content="https://geotrellis.io/"/><meta property="og:description" content="![GeoTrellis Layer](/docs/assets/spark-tile-layer-partitions.png)"/><meta property="og:image" content="https://geotrellis.io/img/undraw_online.svg"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="https://geotrellis.io/img/undraw_tweetstorm.svg"/><link rel="shortcut icon" href="/img/favicon.png"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css"/><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><script src="/js/scrollSpy.js"></script><link rel="stylesheet" href="/css/main.css"/><script src="/js/codetabs.js"></script></head><body class="sideNavVisible separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/"><img class="logo" src="/img/favicon.png" alt="GeoTrellis"/><h2 class="headerTitleWithLogo">GeoTrellis</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"></ul></nav></div></header></div></div><div class="navPusher singleRowMobileNav"><div class="docMainWrapper wrapper"><div class="docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><div class="hamburger-menu"><div class="line1"></div><div class="line2"></div><div class="line3"></div></div></div><h2><i>›</i><span>Spark</span></h2><div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div></div><div class="navGroups"><div class="navGroup"><h3 class="navGroupCategoryTitle">Getting Started</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/getting-started">Getting Started</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Vector</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/vectors">Vectors</a></li><li class="navListItem"><a class="navItem" href="/docs/projection">Projection</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Raster</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/rasters">Rasters</a></li><li class="navListItem"><a class="navItem" href="/docs/tiles">Tiles</a></li><li class="navListItem"><a class="navItem" href="/docs/rastersource">RasterSource</a></li><li class="navListItem"><a class="navItem" href="/docs/rendering-images">Rendering Images</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Layer</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/layer-model">Layer Model</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Spark</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/spark-basics">Basics</a></li><li class="navListItem navListItemActive"><a class="navItem" href="/docs/spark-layer-rdd">Tile Layer RDD</a></li><li class="navListItem"><a class="navItem" href="/docs/spark-layer-ingest">Layer Ingest</a></li><li class="navListItem"><a class="navItem" href="/docs/spark-indexed-layers">Indexed Layers</a></li></ul></div></div></section></div><script>
+            var coll = document.getElementsByClassName('collapsible');
+            var checkActiveCategory = true;
+            for (var i = 0; i < coll.length; i++) {
+              var links = coll[i].nextElementSibling.getElementsByTagName('*');
+              if (checkActiveCategory){
+                for (var j = 0; j < links.length; j++) {
+                  if (links[j].classList.contains('navListItemActive')){
+                    coll[i].nextElementSibling.classList.toggle('hide');
+                    coll[i].childNodes[1].classList.toggle('rotate');
+                    checkActiveCategory = false;
+                    break;
+                  }
+                }
+              }
+
+              coll[i].addEventListener('click', function() {
+                var arrow = this.childNodes[1];
+                arrow.classList.toggle('rotate');
+                var content = this.nextElementSibling;
+                content.classList.toggle('hide');
+              });
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+              createToggler('#navToggler', '#docsNav', 'docsSliderActive');
+              createToggler('#tocToggler', 'body', 'tocActive');
+
+              var headings = document.querySelector('.toc-headings');
+              headings && headings.addEventListener('click', function(event) {
+                var el = event.target;
+                while(el !== headings){
+                  if (el.tagName === 'A') {
+                    document.body.classList.remove('tocActive');
+                    break;
+                  } else{
+                    el = el.parentNode;
+                  }
+                }
+              }, false);
+
+              function createToggler(togglerSelector, targetSelector, className) {
+                var toggler = document.querySelector(togglerSelector);
+                var target = document.querySelector(targetSelector);
+
+                if (!toggler) {
+                  return;
+                }
+
+                toggler.onclick = function(event) {
+                  event.preventDefault();
+
+                  target.classList.toggle(className);
+                };
+              }
+            });
+        </script></nav></div><div class="container mainContainer docsContainer"><div class="wrapper"><div class="post"><header class="postHeader"><h1 id="__docusaurus" class="postHeaderTitle">Tile Layer RDD</h1></header><article><div><span><p><img src="/docs/assets/spark-tile-layer-partitions.png" alt="GeoTrellis Layer"></p>
+<p>A layer is an <code>RDD[(SpatialKey, Tile)] with Metadata[TileLayerMetadata[SpatialKey]]</code>.
+Conceptually a layer is a tiled raster. Functionally you can treat it as a distributed Map object.</p>
+<ul>
+<li><code>SpatialKey</code> is from <a href="/docs/layer-model"><code>LayoutDefinition</code></a> defined by layer metadata</li>
+<li>Every <code>Tile</code> in a layer has same:
+<ul>
+<li>Dimensions (col x row)</li>
+<li>Band Count</li>
+<li>CellType</li>
+<li>Map Projection</li>
+<li>Spatial Resolution (pixels per map X/Y units)</li>
+</ul></li>
+</ul>
+<p>The design philosophy behind GeoTrellis spark API is that it should work as much as possible with native spark types and should minimize number of new classes of wrappers. Therefore <code>TileLayerRDD</code> is first and foremost an <code>RDD</code> and has all of the methods available to RDD of its type. The spatial metadata is &quot;extra&quot;.</p>
+<p><strong>Note</strong>:
+There is no requirement that each key value occurs only once within a layer.
+Typically that is the case, but ultimately the property can only be inferred based on the operations that that produced the layer.</p>
+<h2><a class="anchor" aria-hidden="true" id="pair-rdd-methods"></a><a href="#pair-rdd-methods" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Pair RDD methods</h2>
+<p>Because each record in a layer RDD is a tuple key and value Spark provides additional methods through <a href="https://github.com/apache/spark/blob/master/core/src/main/scala/org/apache/spark/rdd/PairRDDFunctions.scala"><code>PairRDDFunctions</code></a> implicit <a href="https://github.com/apache/spark/blob//core/src/main/scala/org/apache/spark/rdd/RDD.scala#L2014-L2017">method extensions</a>:</p>
+<ul>
+<li><a href="https://github.com/apache/spark/blob/0d997e5156a751c99cd6f8be1528ed088a585d1f/core/src/main/scala/org/apache/spark/rdd/PairRDDFunctions.scala#L306-L313"><code>reduceByKey</code></a></li>
+<li><a href="https://github.com/apache/spark/blob/0d997e5156a751c99cd6f8be1528ed088a585d1f/core/src/main/scala/org/apache/spark/rdd/PairRDDFunctions.scala#L120-L133"><code>combineByKey</code></a></li>
+<li><a href="https://github.com/apache/spark/blob/0d997e5156a751c99cd6f8be1528ed088a585d1f/core/src/main/scala/org/apache/spark/rdd/PairRDDFunctions.scala#L506-L520"><code>groupByKey</code></a></li>
+<li><a href="https://github.com/apache/spark/blob/0d997e5156a751c99cd6f8be1528ed088a585d1f/core/src/main/scala/org/apache/spark/rdd/PairRDDFunctions.scala#L522-L534"><code>partitionBy</code></a></li>
+<li><a href="https://github.com/apache/spark/blob/0d997e5156a751c99cd6f8be1528ed088a585d1f/core/src/main/scala/org/apache/spark/rdd/PairRDDFunctions.scala#L536-L545"><code>join</code></a></li>
+<li><a href="https://github.com/apache/spark/blob/0d997e5156a751c99cd6f8be1528ed088a585d1f/core/src/main/scala/org/apache/spark/rdd/PairRDDFunctions.scala#L547-L563"><code>leftOuterJoin</code></a></li>
+<li><a href="https://github.com/apache/spark/blob/0d997e5156a751c99cd6f8be1528ed088a585d1f/core/src/main/scala/org/apache/spark/rdd/PairRDDFunctions.scala#L565-L580"><code>rightOuterJoin</code></a></li>
+<li><a href="https://github.com/apache/spark/blob/0d997e5156a751c99cd6f8be1528ed088a585d1f/core/src/main/scala/org/apache/spark/rdd/PairRDDFunctions.scala#L713-L725"><code>fullOuterJoin</code></a></li>
+<li><a href="https://github.com/apache/spark/blob/0d997e5156a751c99cd6f8be1528ed088a585d1f/core/src/main/scala/org/apache/spark/rdd/PairRDDFunctions.scala#L744-L753"><code>mapValues</code></a></li>
+<li><a href="https://github.com/apache/spark/blob/0d997e5156a751c99cd6f8be1528ed088a585d1f/core/src/main/scala/org/apache/spark/rdd/PairRDDFunctions.scala#L755-L766"><code>flatMapValues</code></a></li>
+</ul>
+<p>Once a layer exists much of the work transforming a layer can be done these built-in Spark functions.</p>
+<h2><a class="anchor" aria-hidden="true" id="reading-layer"></a><a href="#reading-layer" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Reading Layer</h2>
+<pre><code class="hljs css language-scala"><span class="hljs-keyword">import</span> org.apache.spark._
+
+<span class="hljs-keyword">implicit</span> <span class="hljs-keyword">val</span> sparkContext =
+  <span class="hljs-type">SparkContext</span>.getOrCreate(
+    <span class="hljs-keyword">new</span> <span class="hljs-type">SparkConf</span>(loadDefaults = <span class="hljs-literal">true</span>)
+      .setMaster(<span class="hljs-string">"local[*]"</span>)
+      .setAppName(<span class="hljs-string">"Demo"</span>)
+      .set(<span class="hljs-string">"spark.serializer"</span>, <span class="hljs-string">"org.apache.spark.serializer.KryoSerializer"</span>)
+      .set(<span class="hljs-string">"spark.kryo.registrator"</span>, <span class="hljs-string">"geotrellis.spark.store.kryo.KryoRegistrator"</span>))
+</code></pre>
+<p>Lets build a layer from a small demo file, we will have more later.
+First we construct our <code>RasterSource</code> instances.</p>
+<pre><code class="hljs css language-scala"><span class="hljs-keyword">import</span> geotrellis.layer._
+<span class="hljs-keyword">import</span> geotrellis.spark._
+<span class="hljs-keyword">import</span> geotrellis.raster.geotiff.<span class="hljs-type">GeoTiffRasterSource</span>
+
+<span class="hljs-keyword">val</span> uri = <span class="hljs-string">"s3://geotrellis-demo/cogs/harrisburg-pa/elevation.tif"</span>
+<span class="hljs-keyword">val</span> source = <span class="hljs-type">GeoTiffRasterSource</span>(uri)
+</code></pre>
+<p>At this point we can read the file but we have to make a choice about what kind of tiling layout we want to use.
+If we know ahead of time, we can skip this step. But if the input is more variable we can use <code>RasterSummary</code> object.
+<code>RasterSummary</code> will expand the extent to cover all of the seen rasters, at highest resolution.</p>
+<blockquote>
+<p><code>RasterSummary</code> will through an exception if it encounters sources in different projects because their extents are not comparable. If that's your problem, reproject your sources to common CRS before collecting the summary.</p>
+</blockquote>
+<pre><code class="hljs css language-scala"><span class="hljs-keyword">val</span> summary = <span class="hljs-type">RasterSummary</span>.fromSeq(<span class="hljs-type">List</span>(source))
+</code></pre>
+<p>An instance of <code>RasterSummary</code> will produce for you a <code>LayoutDefinition</code> that covers the input data and matches your layout scheme. In this case lets snap our raster to one of the slippy zoom levels. This will up-sample our raster to snap it to closest zoom level</p>
+<pre><code class="hljs css language-scala"><span class="hljs-keyword">import</span> geotrellis.spark._
+<span class="hljs-keyword">import</span> geotrellis.proj4.<span class="hljs-type">WebMercator</span>
+
+<span class="hljs-keyword">val</span> layout = summary.layoutDefinition(<span class="hljs-type">ZoomedLayoutScheme</span>(<span class="hljs-type">WebMercator</span>, <span class="hljs-number">256</span>))
+<span class="hljs-keyword">val</span> layer = <span class="hljs-type">RasterSourceRDD</span>.spatial(source, layout)
+
+</code></pre>
+<h2><a class="anchor" aria-hidden="true" id="layer-metadata"></a><a href="#layer-metadata" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Layer Metadata</h2>
+<p>// problem ... I can't run the code</p>
+<pre><code class="hljs css language-scala"><span class="hljs-keyword">val</span> layer: <span class="hljs-type">TileLayerRDD</span>[<span class="hljs-type">SpatialKey</span>] = ???
+
+layer.metadata
+
+</code></pre>
+<p>TODO: example of joining layers</p>
+<h2><a class="anchor" aria-hidden="true" id="partitioning"></a><a href="#partitioning" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Partitioning</h2>
+<p>A layer does not restrict how its records are partitioned. Generally a <a href="https://github.com/apache/spark/blob/v2.4.5/core/src/main/scala/org/apache/spark/Partitioner.scala#L104-L130"><code>HashPartitioner</code></a> is used and records are distributed across all the partitions based on the modulo division of the key hash.</p>
+<p>Specifying layer partitioning provides an interesting avenue for optimization. When joining two layers that have different partitioning a shuffle has to happen in order to co-locate all the records from layer A with all the records from layer B. However, if two layers share the same partitioner Spark can infer that all keys that could join to a given partition in layer A must come from a single partition in layer B. Such a join does not result in a shuffle and is thus an order of a magnitude faster.</p>
+<pre><code class="hljs css language-scala">sparkContext.stop()
+</code></pre>
+</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/docs/spark-basics"><span class="arrow-prev">← </span><span>Basics</span></a><a class="docs-next button" href="/docs/spark-layer-ingest"><span>Layer Ingest</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#pair-rdd-methods">Pair RDD methods</a></li><li><a href="#reading-layer">Reading Layer</a></li><li><a href="#layer-metadata">Layer Metadata</a></li><li><a href="#partitioning">Partitioning</a></li></ul></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><a href="/" class="nav-home"><img src="/img/favicon.png" alt="GeoTrellis" width="66" height="58"/></a><div><h5>Community</h5><a href="/en/users.html">User Showcase</a><a target="_blank" rel="noreferrer noopener">Gitter.im</a></div><div><h5>More</h5><a href="undefined">Blog</a><a class="github-button" href="" data-icon="octicon-star" data-count-href="/locationtech/geotrellis/stargazers" data-show-count="true" data-count-aria-label="# stargazers on GitHub" aria-label="Star this project on GitHub">Star</a></div></section><section class="copyright">Copyright © 2020 Azavea</section></footer></div></body></html>
