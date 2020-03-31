@@ -62,7 +62,7 @@ Instead of reinventing the wheel, GeoTrellis uses JTS as the foundation of its v
 <pre><code class="hljs css language-scala"><span class="hljs-comment">// with JTS</span>
 <span class="hljs-keyword">import</span> org.locationtech.jts
 <span class="hljs-keyword">val</span> gFactory = <span class="hljs-keyword">new</span> jts.geom.<span class="hljs-type">GeometryFactory</span>()
-<span class="hljs-comment">// gFactory: jts.geom.GeometryFactory = org.locationtech.jts.geom.GeometryFactory@34ed5f</span>
+<span class="hljs-comment">// gFactory: jts.geom.GeometryFactory = org.locationtech.jts.geom.GeometryFactory@353a5729</span>
 <span class="hljs-keyword">val</span> coord = <span class="hljs-keyword">new</span> jts.geom.<span class="hljs-type">Coordinate</span>(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>)
 <span class="hljs-comment">// coord: jts.geom.Coordinate = (0.0, 0.0, NaN)</span>
 <span class="hljs-keyword">val</span> jtsPoint = gFactory.createPoint(coord)
@@ -221,7 +221,7 @@ Output JSON will keep properties in the context of a javascript object <code>{}<
 <span class="hljs-keyword">import</span> _root_.io.circe.generic.semiauto._
 <span class="hljs-keyword">case</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">PropertyData</span>(<span class="hljs-params">str: <span class="hljs-type">String</span></span>)</span>
 <span class="hljs-keyword">implicit</span> <span class="hljs-keyword">val</span> encoder: <span class="hljs-type">Encoder</span>[<span class="hljs-type">PropertyData</span>] = deriveEncoder[<span class="hljs-type">PropertyData</span>]
-<span class="hljs-comment">// encoder: Encoder[PropertyData] = io.circe.generic.encoding.DerivedAsObjectEncoder$$anon$1@6cabfa3c</span>
+<span class="hljs-comment">// encoder: Encoder[PropertyData] = io.circe.generic.encoding.DerivedAsObjectEncoder$$anon$1@ce7c3fd</span>
 
 <span class="hljs-keyword">val</span> featureString =
   <span class="hljs-type">Feature</span>(<span class="hljs-type">Point</span>(<span class="hljs-number">12</span>, <span class="hljs-number">34</span>), <span class="hljs-type">PropertyData</span>(<span class="hljs-string">"stringTest"</span>)).asJson.noSpaces
@@ -235,7 +235,7 @@ The other added complexity is that we must extract results from an <code>Either<
 <pre><code class="hljs css language-scala"><span class="hljs-keyword">import</span> _root_.io.circe.parser.decode
 <span class="hljs-keyword">implicit</span> <span class="hljs-keyword">val</span> decoder: <span class="hljs-type">Decoder</span>[<span class="hljs-type">PropertyData</span>] =
   deriveDecoder[<span class="hljs-type">PropertyData</span>]
-<span class="hljs-comment">// decoder: Decoder[PropertyData] = io.circe.generic.decoding.DerivedDecoder$$anon$1@6be8782f</span>
+<span class="hljs-comment">// decoder: Decoder[PropertyData] = io.circe.generic.decoding.DerivedDecoder$$anon$1@6b034e57</span>
 
 <span class="hljs-comment">// getting data out of the Either</span>
 decode[<span class="hljs-type">Feature</span>[<span class="hljs-type">Point</span>, <span class="hljs-type">PropertyData</span>]](featureString) <span class="hljs-keyword">match</span> {
