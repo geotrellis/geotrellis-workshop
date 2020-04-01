@@ -28,7 +28,7 @@ object SparkPi {
     val sparkContext =
       SparkContext.getOrCreate(
         (new SparkConf(loadDefaults =  true))
-          .setIfMissing("master","local[*]")
+          .setIfMissing("spark.master","local[*]")
           .setAppName("Demo"))
 
 
