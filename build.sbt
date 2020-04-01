@@ -14,7 +14,6 @@ lazy val root = (project in file("."))
       "org.locationtech.geotrellis" %% "geotrellis-gdal" % Version.geotrellis,
       "org.locationtech.geotrellis" %% "geotrellis-spark" % Version.geotrellis,
       "org.locationtech.geotrellis" %% "geotrellis-s3" % Version.geotrellis,
-      "org.slf4j" % "slf4j-simple" % "1.8.0-beta4",
       "org.scalatest" %% "scalatest" % "3.1.1" % Test
     ),
     resolvers ++= Seq(
