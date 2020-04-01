@@ -1,0 +1,119 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Extents · GeoTrellis</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="The GeoTrellis raster module depends on the [vector module](/geotrellis-workshop/docs/vectors) to handle the job of describing the scope of real territory (usually in projected units) over which a `Tile` is representative."/><meta name="docsearch:language" content="en"/><meta property="og:title" content="Extents · GeoTrellis"/><meta property="og:type" content="website"/><meta property="og:url" content="https://geotrellis.github.io/geotrellis-workshop/"/><meta property="og:description" content="The GeoTrellis raster module depends on the [vector module](/geotrellis-workshop/docs/vectors) to handle the job of describing the scope of real territory (usually in projected units) over which a `Tile` is representative."/><meta property="og:image" content="https://geotrellis.github.io/geotrellis-workshop/img/undraw_online.svg"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="https://geotrellis.github.io/geotrellis-workshop/img/undraw_tweetstorm.svg"/><link rel="shortcut icon" href="/geotrellis-workshop/img/favicon.png"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css"/><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><script src="/geotrellis-workshop/js/scrollSpy.js"></script><link rel="stylesheet" href="/geotrellis-workshop/css/main.css"/><script src="/geotrellis-workshop/js/codetabs.js"></script></head><body class="sideNavVisible separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/geotrellis-workshop/"><img class="logo" src="/geotrellis-workshop/img/favicon.png" alt="GeoTrellis"/><h2 class="headerTitleWithLogo">GeoTrellis</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"></ul></nav></div></header></div></div><div class="navPusher singleRowMobileNav"><div class="docMainWrapper wrapper"><div class="docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><div class="hamburger-menu"><div class="line1"></div><div class="line2"></div><div class="line3"></div></div></div><h2><i>›</i><span>Vector</span></h2><div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div></div><div class="navGroups"><div class="navGroup"><h3 class="navGroupCategoryTitle">Getting Started</h3><ul class=""><li class="navListItem"><a class="navItem" href="/geotrellis-workshop/docs/getting-started">Getting Started</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Vector</h3><ul class=""><li class="navListItem"><a class="navItem" href="/geotrellis-workshop/docs/vectors">Vectors</a></li><li class="navListItem navListItemActive"><a class="navItem" href="/geotrellis-workshop/docs/extents">Extents</a></li><li class="navListItem"><a class="navItem" href="/geotrellis-workshop/docs/projection">Projection</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Raster</h3><ul class=""><li class="navListItem"><a class="navItem" href="/geotrellis-workshop/docs/rasters">Rasters</a></li><li class="navListItem"><a class="navItem" href="/geotrellis-workshop/docs/tiles">Tiles</a></li><li class="navListItem"><a class="navItem" href="/geotrellis-workshop/docs/rastersource">RasterSource</a></li><li class="navListItem"><a class="navItem" href="/geotrellis-workshop/docs/rendering-images">Rendering Images</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Layer</h3><ul class=""><li class="navListItem"><a class="navItem" href="/geotrellis-workshop/docs/layer-model">Layer Model</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Spark</h3><ul class=""><li class="navListItem"><a class="navItem" href="/geotrellis-workshop/docs/spark-basics">Basics</a></li><li class="navListItem"><a class="navItem" href="/geotrellis-workshop/docs/spark-layer-rdd">Tile Layer RDD</a></li><li class="navListItem"><a class="navItem" href="/geotrellis-workshop/docs/spark-indexed-layers">Indexed Layers</a></li></ul></div></div></section></div><script>
+            var coll = document.getElementsByClassName('collapsible');
+            var checkActiveCategory = true;
+            for (var i = 0; i < coll.length; i++) {
+              var links = coll[i].nextElementSibling.getElementsByTagName('*');
+              if (checkActiveCategory){
+                for (var j = 0; j < links.length; j++) {
+                  if (links[j].classList.contains('navListItemActive')){
+                    coll[i].nextElementSibling.classList.toggle('hide');
+                    coll[i].childNodes[1].classList.toggle('rotate');
+                    checkActiveCategory = false;
+                    break;
+                  }
+                }
+              }
+
+              coll[i].addEventListener('click', function() {
+                var arrow = this.childNodes[1];
+                arrow.classList.toggle('rotate');
+                var content = this.nextElementSibling;
+                content.classList.toggle('hide');
+              });
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+              createToggler('#navToggler', '#docsNav', 'docsSliderActive');
+              createToggler('#tocToggler', 'body', 'tocActive');
+
+              var headings = document.querySelector('.toc-headings');
+              headings && headings.addEventListener('click', function(event) {
+                var el = event.target;
+                while(el !== headings){
+                  if (el.tagName === 'A') {
+                    document.body.classList.remove('tocActive');
+                    break;
+                  } else{
+                    el = el.parentNode;
+                  }
+                }
+              }, false);
+
+              function createToggler(togglerSelector, targetSelector, className) {
+                var toggler = document.querySelector(togglerSelector);
+                var target = document.querySelector(targetSelector);
+
+                if (!toggler) {
+                  return;
+                }
+
+                toggler.onclick = function(event) {
+                  event.preventDefault();
+
+                  target.classList.toggle(className);
+                };
+              }
+            });
+        </script></nav></div><div class="container mainContainer docsContainer"><div class="wrapper"><div class="post"><header class="postHeader"><h1 id="__docusaurus" class="postHeaderTitle">Extents</h1></header><article><div><span><p>The GeoTrellis raster module depends on the <a href="/geotrellis-workshop/docs/vectors">vector module</a> to handle the job of describing the scope of real territory (usually in projected units) over which a <code>Tile</code> is representative.
+<code>Extent</code> is the class which, paired with a <code>Tile</code>, allows us to build a <code>Raster</code>.</p>
+<p>Its constructor takes a minimum X, minimum Y, maximum X, and a maximum Y.
+With these boundaries we can actually fix the corners of an associated <code>Tile</code> and use interpolation to determine mappings from real world coordinates within the provided <code>Extent</code> to values derived from that <code>Tile</code>'s cells.</p>
+<pre><code class="hljs css language-scala"><span class="hljs-keyword">import</span> geotrellis.vector._
+<span class="hljs-keyword">val</span> extent = <span class="hljs-type">Extent</span>(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">90</span>, <span class="hljs-number">90</span>)
+<span class="hljs-comment">// extent: Extent = Extent(0.0, 0.0, 90.0, 90.0)</span>
+</code></pre>
+<p>As discussed in <a href="/geotrellis-workshop/docs/vectors">vectors</a>, rather than reinvent the wheel, <code>geotrellis.vector</code> provides conveniences which leverage the great work done in JTS.
+That fact is apparent here as well: the GeoTrellis <code>Extent</code> is the JTS <code>Envelope</code>.</p>
+<pre><code class="hljs css language-scala">extent.jtsEnvelope
+<span class="hljs-comment">// res0: org.locationtech.jts.geom.Envelope = Env[0.0 : 90.0, 0.0 : 90.0]</span>
+</code></pre>
+<h2><a class="anchor" aria-hidden="true" id="extent-reprojection"></a><a href="#extent-reprojection" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Extent Reprojection</h2>
+<p>As implied by the limited input to its constructor, an <code>Extent</code>can only represent a rectangular region which is aligned with the coordinate system.
+GeoTrellis provides three different ways to reproject <code>Extents</code></p>
+<h3><a class="anchor" aria-hidden="true" id="naive-reprojection-not-recommended"></a><a href="#naive-reprojection-not-recommended" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Naive Reprojection (not recommended)</h3>
+<p>Naive reprojection of an <code>Extent</code> is very simple but can mislead.
+As seen in the case of reprojection as a <code>Polygon</code>, <code>Extent</code> shapes can be expected to warp during projection.
+Imagine turning a rectangle on its diagonal: drawing a rectangle which surrounds this diagonal rectangle but which remains parallel with the original ensures a larger rectangle than the one we turned on its diagonal.</p>
+<pre><code class="hljs css language-scala"><span class="hljs-keyword">import</span> geotrellis.proj4.{<span class="hljs-type">LatLng</span>, <span class="hljs-type">WebMercator</span>, <span class="hljs-type">Transform</span>}
+<span class="hljs-keyword">val</span> transform = <span class="hljs-type">Transform</span>(<span class="hljs-type">LatLng</span>, <span class="hljs-type">WebMercator</span>)
+<span class="hljs-comment">// transform: (Double, Double) =&gt; (Double, Double) = geotrellis.proj4.Proj4Transform$$$Lambda$8739/635551253@5d11803c</span>
+extent.reproject(transform)
+<span class="hljs-comment">// res1: Extent = Extent(</span>
+<span class="hljs-comment">//   0.0,</span>
+<span class="hljs-comment">//   -7.081154551613622E-10,</span>
+<span class="hljs-comment">//   1.0018754171394622E7,</span>
+<span class="hljs-comment">//   2.3810769326496765E8</span>
+<span class="hljs-comment">// )</span>
+</code></pre>
+<blockquote>
+<p>Caution is warranted when naively reprojecting an <code>Extent</code>.
+It can be heuristically useful, but should be relied upon for high precision calculations.
+Instead, use <code>reprojectAsPolygon</code> if reprojecting only the <code>Extent</code> and cellgrid-aware reprojection if attempting to reproject a gridded space.</p>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="polygon-reprojection-recommended"></a><a href="#polygon-reprojection-recommended" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Polygon Reprojection (recommended)</h3>
+<p>Rectangular regions become curvilinear regions after geodetic projection.
+To see exactly which bits of territory in projection B are covered by an <code>Extent</code> defined for projection A, it should be reprojected as a polygon</p>
+<pre><code class="hljs css language-scala">extent.reprojectAsPolygon(transform, <span class="hljs-number">0.01</span>)
+<span class="hljs-comment">// res2: Polygon = POLYGON ((0 -0.0000000007081155, 5009377.085697311 -0.0000000007081155, 10018754.171394622 -0.0000000007081155, 10018754.171394622 5621521.486192066, 10018754.171394622 238107693.26496765, 5009377.085697311 238107693.26496765, 0 238107693.26496765, 0 5621521.486192066, 0 -0.0000000007081155))</span>
+</code></pre>
+<blockquote>
+<p>This method adaptively refines its output.
+To exit adaptive refinement, a tolerance value is required to define success.
+In this case, 0.01 specifies the amount of deflection allowed in terms of distance from the original <code>Extent</code>'s line to the point which represents it under another projection</p>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="cellgrid-aware-reprojection-recommended"></a><a href="#cellgrid-aware-reprojection-recommended" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>CellGrid-Aware Reprojection (recommended)</h3>
+<p>Reprojection of a gridded space's extent imposes constraints not seen in the above cases.
+In addition to the needing to accurately capture the transformation of an <code>Extent</code>, this method requires information about the grid of cells which corresponds to said input <code>Extent</code>.
+This information is used to approximately preserve the pre-reprojection resolution.</p>
+<p>They only information in addition to <code>Extent</code> required to compute this kind of reprojection is the resolution.
+<code>Extent</code> plus resolution yields a <code>GridExtent</code> or a <code>RasterExtent</code>, either of which are suitable for carrying out reprojection of a gridded space.
+Take note that the <code>CellSize</code> has been transformed in addition to the <code>Extent</code>:</p>
+<pre><code class="hljs css language-scala"><span class="hljs-keyword">import</span> geotrellis.raster._
+<span class="hljs-keyword">val</span> cs = <span class="hljs-type">CellSize</span>(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>)
+<span class="hljs-comment">// cs: CellSize = CellSize(1.0, 1.0)</span>
+<span class="hljs-keyword">val</span> before = <span class="hljs-type">GridExtent</span>[<span class="hljs-type">Long</span>](extent, cs)
+<span class="hljs-comment">// before: GridExtent[Long] = GridExtent(Extent(0.0, 0.0, 90.0, 90.0),CellSize(1.0,1.0),90x90)</span>
+<span class="hljs-keyword">val</span> after = before.reproject(<span class="hljs-type">LatLng</span>, <span class="hljs-type">WebMercator</span>)
+<span class="hljs-comment">// after: GridExtent[Long] = GridExtent(Extent(0.0, 312130.176451385, 9362030.042854972, 2.3810769326496765E8),CellSize(1872406.0085709943,1872406.0085709943),5x127)</span>
+</code></pre>
+</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/geotrellis-workshop/docs/vectors"><span class="arrow-prev">← </span><span>Vectors</span></a><a class="docs-next button" href="/geotrellis-workshop/docs/projection"><span>Projection</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#extent-reprojection">Extent Reprojection</a><ul class="toc-headings"><li><a href="#naive-reprojection-not-recommended">Naive Reprojection (not recommended)</a></li><li><a href="#polygon-reprojection-recommended">Polygon Reprojection (recommended)</a></li><li><a href="#cellgrid-aware-reprojection-recommended">CellGrid-Aware Reprojection (recommended)</a></li></ul></li></ul></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><a href="/geotrellis-workshop/" class="nav-home"><img src="/geotrellis-workshop/img/favicon.png" alt="GeoTrellis" width="66" height="58"/></a><div><h5>Community</h5><a href="/geotrellis-workshop/en/users.html">User Showcase</a><a target="_blank" rel="noreferrer noopener">Gitter.im</a></div><div><h5>More</h5><a href="undefined">Blog</a><a class="github-button" href="" data-icon="octicon-star" data-count-href="/locationtech/geotrellis/stargazers" data-show-count="true" data-count-aria-label="# stargazers on GitHub" aria-label="Star this project on GitHub">Star</a></div></section><section class="copyright">Copyright © 2020 Azavea</section></footer></div></body></html>

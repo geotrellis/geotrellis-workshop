@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>RasterSource · GeoTrellis</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="`RasterSource` interface is fundamental raster input interface in GeoTrellis."/><meta name="docsearch:language" content="en"/><meta property="og:title" content="RasterSource · GeoTrellis"/><meta property="og:type" content="website"/><meta property="og:url" content="https://geotrellis.github.io/geotrellis-workshop/"/><meta property="og:description" content="`RasterSource` interface is fundamental raster input interface in GeoTrellis."/><meta property="og:image" content="https://geotrellis.github.io/geotrellis-workshop/img/undraw_online.svg"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="https://geotrellis.github.io/geotrellis-workshop/img/undraw_tweetstorm.svg"/><link rel="shortcut icon" href="/geotrellis-workshop/img/favicon.png"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css"/><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><script src="/geotrellis-workshop/js/scrollSpy.js"></script><link rel="stylesheet" href="/geotrellis-workshop/css/main.css"/><script src="/geotrellis-workshop/js/codetabs.js"></script></head><body class="sideNavVisible separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/geotrellis-workshop/"><img class="logo" src="/geotrellis-workshop/img/favicon.png" alt="GeoTrellis"/><h2 class="headerTitleWithLogo">GeoTrellis</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"></ul></nav></div></header></div></div><div class="navPusher singleRowMobileNav"><div class="docMainWrapper wrapper"><div class="docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><div class="hamburger-menu"><div class="line1"></div><div class="line2"></div><div class="line3"></div></div></div><h2><i>›</i><span>Raster</span></h2><div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div></div><div class="navGroups"><div class="navGroup"><h3 class="navGroupCategoryTitle">Getting Started</h3><ul class=""><li class="navListItem"><a class="navItem" href="/geotrellis-workshop/docs/getting-started">Getting Started</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Vector</h3><ul class=""><li class="navListItem"><a class="navItem" href="/geotrellis-workshop/docs/vectors">Vectors</a></li><li class="navListItem"><a class="navItem" href="/geotrellis-workshop/docs/projection">Projection</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Raster</h3><ul class=""><li class="navListItem"><a class="navItem" href="/geotrellis-workshop/docs/rasters">Rasters</a></li><li class="navListItem"><a class="navItem" href="/geotrellis-workshop/docs/tiles">Tiles</a></li><li class="navListItem navListItemActive"><a class="navItem" href="/geotrellis-workshop/docs/rastersource">RasterSource</a></li><li class="navListItem"><a class="navItem" href="/geotrellis-workshop/docs/rendering-images">Rendering Images</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Layer</h3><ul class=""><li class="navListItem"><a class="navItem" href="/geotrellis-workshop/docs/layer-model">Layer Model</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Spark</h3><ul class=""><li class="navListItem"><a class="navItem" href="/geotrellis-workshop/docs/spark-basics">Basics</a></li><li class="navListItem"><a class="navItem" href="/geotrellis-workshop/docs/spark-layer-rdd">Tile Layer RDD</a></li><li class="navListItem"><a class="navItem" href="/geotrellis-workshop/docs/spark-indexed-layers">Indexed Layers</a></li></ul></div></div></section></div><script>
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>RasterSource · GeoTrellis</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="`RasterSource` interface is fundamental raster input interface in GeoTrellis."/><meta name="docsearch:language" content="en"/><meta property="og:title" content="RasterSource · GeoTrellis"/><meta property="og:type" content="website"/><meta property="og:url" content="https://geotrellis.github.io/geotrellis-workshop/"/><meta property="og:description" content="`RasterSource` interface is fundamental raster input interface in GeoTrellis."/><meta property="og:image" content="https://geotrellis.github.io/geotrellis-workshop/img/undraw_online.svg"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="https://geotrellis.github.io/geotrellis-workshop/img/undraw_tweetstorm.svg"/><link rel="shortcut icon" href="/geotrellis-workshop/img/favicon.png"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css"/><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><script src="/geotrellis-workshop/js/scrollSpy.js"></script><link rel="stylesheet" href="/geotrellis-workshop/css/main.css"/><script src="/geotrellis-workshop/js/codetabs.js"></script></head><body class="sideNavVisible separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/geotrellis-workshop/"><img class="logo" src="/geotrellis-workshop/img/favicon.png" alt="GeoTrellis"/><h2 class="headerTitleWithLogo">GeoTrellis</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"></ul></nav></div></header></div></div><div class="navPusher singleRowMobileNav"><div class="docMainWrapper wrapper"><div class="docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><div class="hamburger-menu"><div class="line1"></div><div class="line2"></div><div class="line3"></div></div></div><h2><i>›</i><span>Raster</span></h2><div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div></div><div class="navGroups"><div class="navGroup"><h3 class="navGroupCategoryTitle">Getting Started</h3><ul class=""><li class="navListItem"><a class="navItem" href="/geotrellis-workshop/docs/getting-started">Getting Started</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Vector</h3><ul class=""><li class="navListItem"><a class="navItem" href="/geotrellis-workshop/docs/vectors">Vectors</a></li><li class="navListItem"><a class="navItem" href="/geotrellis-workshop/docs/extents">Extents</a></li><li class="navListItem"><a class="navItem" href="/geotrellis-workshop/docs/projection">Projection</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Raster</h3><ul class=""><li class="navListItem"><a class="navItem" href="/geotrellis-workshop/docs/rasters">Rasters</a></li><li class="navListItem"><a class="navItem" href="/geotrellis-workshop/docs/tiles">Tiles</a></li><li class="navListItem navListItemActive"><a class="navItem" href="/geotrellis-workshop/docs/rastersource">RasterSource</a></li><li class="navListItem"><a class="navItem" href="/geotrellis-workshop/docs/rendering-images">Rendering Images</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Layer</h3><ul class=""><li class="navListItem"><a class="navItem" href="/geotrellis-workshop/docs/layer-model">Layer Model</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Spark</h3><ul class=""><li class="navListItem"><a class="navItem" href="/geotrellis-workshop/docs/spark-basics">Basics</a></li><li class="navListItem"><a class="navItem" href="/geotrellis-workshop/docs/spark-layer-rdd">Tile Layer RDD</a></li><li class="navListItem"><a class="navItem" href="/geotrellis-workshop/docs/spark-indexed-layers">Indexed Layers</a></li></ul></div></div></section></div><script>
             var coll = document.getElementsByClassName('collapsible');
             var checkActiveCategory = true;
             for (var i = 0; i < coll.length; i++) {
@@ -67,7 +67,7 @@ It abstracts over file format, access schema, and reader implementation.</p>
 <pre><code class="hljs css language-scala"><span class="hljs-keyword">import</span> geotrellis.raster.geotiff.<span class="hljs-type">GeoTiffRasterSource</span>
 
 <span class="hljs-keyword">val</span> source = <span class="hljs-type">GeoTiffRasterSource</span>(<span class="hljs-string">"https://geotrellis-demo.s3.amazonaws.com/data/aspect.tif"</span>)
-<span class="hljs-comment">// source: GeoTiffRasterSource = geotrellis.raster.geotiff.GeoTiffRasterSource@7cc9e5d3</span>
+<span class="hljs-comment">// source: GeoTiffRasterSource = geotrellis.raster.geotiff.GeoTiffRasterSource@58c91c59</span>
 
 source.extent
 <span class="hljs-comment">// res0: geotrellis.vector.Extent = Extent(</span>
@@ -107,7 +107,7 @@ source.metadata.attributes
 <span class="hljs-keyword">val</span> centerWindow = source.read(bbox)
 <span class="hljs-comment">// centerWindow: Option[Raster[MultibandTile]] = Some(</span>
 <span class="hljs-comment">//   Raster(</span>
-<span class="hljs-comment">//     geotrellis.raster.ArrayMultibandTile@6a755c97,</span>
+<span class="hljs-comment">//     geotrellis.raster.ArrayMultibandTile@58e2cf22,</span>
 <span class="hljs-comment">//     Extent(633750.0, 218370.0, 641250.0, 225130.0)</span>
 <span class="hljs-comment">//   )</span>
 <span class="hljs-comment">// )</span>
@@ -117,7 +117,7 @@ centerWindow.get.dimensions
 <span class="hljs-keyword">val</span> leftCorner = source.read(<span class="hljs-type">GridBounds</span>(<span class="hljs-number">0</span>L, <span class="hljs-number">0</span>L, <span class="hljs-number">255</span>L, <span class="hljs-number">255</span>L))
 <span class="hljs-comment">// leftCorner: Option[Raster[MultibandTile]] = Some(</span>
 <span class="hljs-comment">//   Raster(</span>
-<span class="hljs-comment">//     geotrellis.raster.ArrayMultibandTile@1c3674d5,</span>
+<span class="hljs-comment">//     geotrellis.raster.ArrayMultibandTile@466ee309,</span>
 <span class="hljs-comment">//     Extent(630000.0, 225940.0, 632560.0, 228500.0)</span>
 <span class="hljs-comment">//   )</span>
 <span class="hljs-comment">// )</span>
@@ -135,7 +135,7 @@ This feature is similar to GDAL VRT, indeed <code>GDALRasterSource</code> is bac
 <span class="hljs-keyword">import</span> geotrellis.raster.resample.{ <span class="hljs-type">NearestNeighbor</span> }
 
 <span class="hljs-keyword">val</span> wgs84Source = source.reproject(<span class="hljs-type">LatLng</span>, method = <span class="hljs-type">NearestNeighbor</span>)
-<span class="hljs-comment">// wgs84Source: RasterSource = geotrellis.raster.geotiff.GeoTiffReprojectRasterSource@72ea6310</span>
+<span class="hljs-comment">// wgs84Source: RasterSource = geotrellis.raster.geotiff.GeoTiffReprojectRasterSource@1e091544</span>
 wgs84Source.extent
 <span class="hljs-comment">// res7: Extent = Extent(</span>
 <span class="hljs-comment">//   -78.7746204948163,</span>
@@ -147,7 +147,7 @@ wgs84Source.extent
 <span class="hljs-keyword">val</span> w1 = wgs84Source.read(<span class="hljs-type">Extent</span>(<span class="hljs-number">-78.68</span>, <span class="hljs-number">35.76</span>, <span class="hljs-number">-78.65</span>, <span class="hljs-number">35.78</span>))
 <span class="hljs-comment">// w1: Option[Raster[MultibandTile]] = Some(</span>
 <span class="hljs-comment">//   Raster(</span>
-<span class="hljs-comment">//     geotrellis.raster.ArrayMultibandTile@361701c,</span>
+<span class="hljs-comment">//     geotrellis.raster.ArrayMultibandTile@521498aa,</span>
 <span class="hljs-comment">//     Extent(</span>
 <span class="hljs-comment">//       -78.68004798889035,</span>
 <span class="hljs-comment">//       35.759920477633685,</span>
@@ -166,7 +166,7 @@ This is a requirement to be able to combine two rasters in a map algebra operati
 <span class="hljs-comment">// minuteGrid: GridExtent[Int] = GridExtent(Extent(-180.0, -90.0, 180.0, 90.0),CellSize(0.016666666666666666,0.016666666666666666),21600x10800)</span>
 
 <span class="hljs-keyword">val</span> w2 = source.reprojectToGrid(<span class="hljs-type">LatLng</span>, minuteGrid.toGridType[<span class="hljs-type">Long</span>], <span class="hljs-type">NearestNeighbor</span>)
-<span class="hljs-comment">// w2: RasterSource = geotrellis.raster.geotiff.GeoTiffReprojectRasterSource@43b01503</span>
+<span class="hljs-comment">// w2: RasterSource = geotrellis.raster.geotiff.GeoTiffReprojectRasterSource@1c41d615</span>
 
 w2.dimensions
 <span class="hljs-comment">// res9: Dimensions[Long] = Dimensions(11L, 8L)</span>
@@ -178,7 +178,7 @@ w2.dimensions
 <pre><code class="hljs css language-scala"><span class="hljs-keyword">import</span> geotrellis.layer._
 
 <span class="hljs-keyword">val</span> scheme = <span class="hljs-type">ZoomedLayoutScheme</span>(<span class="hljs-type">WebMercator</span>, <span class="hljs-number">256</span>)
-<span class="hljs-comment">// scheme: ZoomedLayoutScheme = geotrellis.layer.ZoomedLayoutScheme@6c8f417c</span>
+<span class="hljs-comment">// scheme: ZoomedLayoutScheme = geotrellis.layer.ZoomedLayoutScheme@2d86183f</span>
 <span class="hljs-keyword">val</span> level = scheme.levelForZoom(<span class="hljs-number">14</span>)
 <span class="hljs-comment">// level: LayoutLevel = LayoutLevel(</span>
 <span class="hljs-comment">//   14,</span>
@@ -196,7 +196,7 @@ w2.dimensions
 <span class="hljs-keyword">val</span> tileSource = <span class="hljs-type">LayoutTileSource</span>.spatial(
   source = source.reprojectToGrid(<span class="hljs-type">WebMercator</span>, level.layout),
   layout = level.layout)
-<span class="hljs-comment">// tileSource: LayoutTileSource[SpatialKey] = geotrellis.layer.LayoutTileSource@4d5c5d1e</span>
+<span class="hljs-comment">// tileSource: LayoutTileSource[SpatialKey] = geotrellis.layer.LayoutTileSource@7bf38bfe</span>
 
 tileSource.keys.take(<span class="hljs-number">3</span>)
 <span class="hljs-comment">// res10: Set[SpatialKey] = Set(</span>
@@ -207,7 +207,7 @@ tileSource.keys.take(<span class="hljs-number">3</span>)
 
 tileSource.read(<span class="hljs-type">SpatialKey</span>(<span class="hljs-number">4609</span>, <span class="hljs-number">6448</span>))
 <span class="hljs-comment">// res11: Option[MultibandTile] = Some(</span>
-<span class="hljs-comment">//   geotrellis.raster.ArrayMultibandTile@45352539</span>
+<span class="hljs-comment">//   geotrellis.raster.ArrayMultibandTile@dd48de2</span>
 <span class="hljs-comment">// )</span>
 </code></pre>
 </span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/geotrellis-workshop/docs/tiles"><span class="arrow-prev">← </span><span>Tiles</span></a><a class="docs-next button" href="/geotrellis-workshop/docs/rendering-images"><span>Rendering Images</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#metadata">Metadata</a></li><li><a href="#windows">Windows</a></li><li><a href="#views">Views</a></li><li><a href="#read-tiles">Read Tiles</a></li></ul></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><a href="/geotrellis-workshop/" class="nav-home"><img src="/geotrellis-workshop/img/favicon.png" alt="GeoTrellis" width="66" height="58"/></a><div><h5>Community</h5><a href="/geotrellis-workshop/en/users.html">User Showcase</a><a target="_blank" rel="noreferrer noopener">Gitter.im</a></div><div><h5>More</h5><a href="undefined">Blog</a><a class="github-button" href="" data-icon="octicon-star" data-count-href="/locationtech/geotrellis/stargazers" data-show-count="true" data-count-aria-label="# stargazers on GitHub" aria-label="Star this project on GitHub">Star</a></div></section><section class="copyright">Copyright © 2020 Azavea</section></footer></div></body></html>
