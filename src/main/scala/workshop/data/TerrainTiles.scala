@@ -1,4 +1,4 @@
-package data
+package workshop.data
 
 import geotrellis.layer.{LayoutDefinition, SpatialKey}
 import geotrellis.raster.{RasterSource, TileLayout}
@@ -35,4 +35,3 @@ object TerrainTiles {
     tileKeys.toSeq.map({ key => GDALRasterSource(tileUri(key)) })
   }
 }
-

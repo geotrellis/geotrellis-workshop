@@ -1,4 +1,4 @@
-import data.TerrainTiles
+import workshop.data.TerrainTiles
 import geotrellis.vector._
 import geotrellis.proj4._
 import example._

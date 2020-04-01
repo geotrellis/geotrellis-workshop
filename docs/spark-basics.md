@@ -22,7 +22,7 @@ implicit val sparkContext =
       .setMaster("local[*]")
       .setAppName("Demo")
       .set("spark.serializer", "org.apache.spark.serializer.KryoSerializer")
-      .set("spark.kryo.registrator", "geotrellis.spark.store.kryo.KryoRegistrator")
+      .set("spark.kryo.registrator", "geotrellis.spark.store.kryo.KryoRegistrator"))
  )
 ```
 
