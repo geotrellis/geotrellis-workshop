@@ -124,7 +124,7 @@ The specific underlying value of said type (`Point` or `NoResult`) can't be dete
 Vectors do not, themselves, keep track of the projection in which their units are correctly defined.
 This means that it is up to users to keep track of projections and to ensure that comparisons are not naively carried out between vectors whose points' coordinates are in different projections.
 
-Below, we've got a latitude/longitude projected `Point` (defined in terms of arcseconds) and want to determine its location under the Web Mercator projection.
+Below, we've got a latitude/longitude projected `Point` (defined in terms of arcseconds) and want to determine its location under the Web Mercator projection (defined in terms of meters).
 
 ```scala mdoc
 import geotrellis.proj4.{LatLng, WebMercator}

@@ -3,6 +3,7 @@
     "Getting Started": ["getting-started"],
     "Vector": [
       "vectors",
+      "extents",
       "projection"
     ],
     "Raster": [
