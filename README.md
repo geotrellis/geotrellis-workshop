@@ -43,7 +43,7 @@ SBT console is an important part of normal spark development cycle and has acces
 
 - `s3://geotrellis-demo/cogs/harrisburg-pa/` holds a number of overlapping GeoTiffs for a study area covering Harrisburg, PA, USA. Useful for exploring basic raster functionality and MapAlgebra.
 - `s3://geotrellis-demo/baja-2019/` holds a monthly median pixel mosaic for 2018 from Sentinel library for AOI over Baja, CA. Chosen for its interesting landscape and cloud-free days. Useful for building temporal layers and building time series analsysis.
-- [Mapzen Terrain Tiles](https://registry.opendata.aws/terrain-tiles/) are read directly from AWS and can be accessed through `data.TerrainTiles` class
+- [Mapzen Terrain Tiles](https://registry.opendata.aws/terrain-tiles/) are read directly from AWS and can be accessed through `workshop.data.TerrainTiles` class
 - [Landsat 8 Scenes](https://registry.opendata.aws/landsat-8/) are read directly from AWS.
 
 ### Supporting Material
