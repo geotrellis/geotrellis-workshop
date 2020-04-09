@@ -1,0 +1,229 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Reading Scala · GeoTrellis</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="A joy/headache of writing Scala is just how many ways there are to write any given program."/><meta name="docsearch:language" content="en"/><meta property="og:title" content="Reading Scala · GeoTrellis"/><meta property="og:type" content="website"/><meta property="og:url" content="https://geotrellis.github.io/geotrellis-workshop/"/><meta property="og:description" content="A joy/headache of writing Scala is just how many ways there are to write any given program."/><meta property="og:image" content="https://geotrellis.github.io/geotrellis-workshop/img/undraw_online.svg"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="https://geotrellis.github.io/geotrellis-workshop/img/undraw_tweetstorm.svg"/><link rel="shortcut icon" href="/geotrellis-workshop/img/favicon.png"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css"/><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><script src="/geotrellis-workshop/js/scrollSpy.js"></script><link rel="stylesheet" href="/geotrellis-workshop/css/main.css"/><script src="/geotrellis-workshop/js/codetabs.js"></script></head><body class="sideNavVisible separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/geotrellis-workshop/"><img class="logo" src="/geotrellis-workshop/img/favicon.png" alt="GeoTrellis"/><h2 class="headerTitleWithLogo">GeoTrellis</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"></ul></nav></div></header></div></div><div class="navPusher singleRowMobileNav"><div class="docMainWrapper wrapper"><div class="docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><div class="hamburger-menu"><div class="line1"></div><div class="line2"></div><div class="line3"></div></div></div><h2><i>›</i><span>Getting Started</span></h2><div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div></div><div class="navGroups"><div class="navGroup"><h3 class="navGroupCategoryTitle">Getting Started</h3><ul class=""><li class="navListItem"><a class="navItem" href="/geotrellis-workshop/docs/getting-started">Getting Started</a></li><li class="navListItem navListItemActive"><a class="navItem" href="/geotrellis-workshop/docs/reading-scala">Reading Scala</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Vector</h3><ul class=""><li class="navListItem"><a class="navItem" href="/geotrellis-workshop/docs/vectors">Vectors</a></li><li class="navListItem"><a class="navItem" href="/geotrellis-workshop/docs/extents">Extents</a></li><li class="navListItem"><a class="navItem" href="/geotrellis-workshop/docs/projection">Projection</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Raster</h3><ul class=""><li class="navListItem"><a class="navItem" href="/geotrellis-workshop/docs/rasters">Rasters</a></li><li class="navListItem"><a class="navItem" href="/geotrellis-workshop/docs/tiles">Tiles</a></li><li class="navListItem"><a class="navItem" href="/geotrellis-workshop/docs/rastersource">RasterSource</a></li><li class="navListItem"><a class="navItem" href="/geotrellis-workshop/docs/rendering-images">Rendering Images</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Layer</h3><ul class=""><li class="navListItem"><a class="navItem" href="/geotrellis-workshop/docs/layer-model">Layer Model</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle">Spark</h3><ul class=""><li class="navListItem"><a class="navItem" href="/geotrellis-workshop/docs/spark-basics">Basics</a></li><li class="navListItem"><a class="navItem" href="/geotrellis-workshop/docs/spark-layer-rdd">Tile Layer RDD</a></li><li class="navListItem"><a class="navItem" href="/geotrellis-workshop/docs/spark-indexed-layers">Indexed Layers</a></li></ul></div></div></section></div><script>
+            var coll = document.getElementsByClassName('collapsible');
+            var checkActiveCategory = true;
+            for (var i = 0; i < coll.length; i++) {
+              var links = coll[i].nextElementSibling.getElementsByTagName('*');
+              if (checkActiveCategory){
+                for (var j = 0; j < links.length; j++) {
+                  if (links[j].classList.contains('navListItemActive')){
+                    coll[i].nextElementSibling.classList.toggle('hide');
+                    coll[i].childNodes[1].classList.toggle('rotate');
+                    checkActiveCategory = false;
+                    break;
+                  }
+                }
+              }
+
+              coll[i].addEventListener('click', function() {
+                var arrow = this.childNodes[1];
+                arrow.classList.toggle('rotate');
+                var content = this.nextElementSibling;
+                content.classList.toggle('hide');
+              });
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+              createToggler('#navToggler', '#docsNav', 'docsSliderActive');
+              createToggler('#tocToggler', 'body', 'tocActive');
+
+              var headings = document.querySelector('.toc-headings');
+              headings && headings.addEventListener('click', function(event) {
+                var el = event.target;
+                while(el !== headings){
+                  if (el.tagName === 'A') {
+                    document.body.classList.remove('tocActive');
+                    break;
+                  } else{
+                    el = el.parentNode;
+                  }
+                }
+              }, false);
+
+              function createToggler(togglerSelector, targetSelector, className) {
+                var toggler = document.querySelector(togglerSelector);
+                var target = document.querySelector(targetSelector);
+
+                if (!toggler) {
+                  return;
+                }
+
+                toggler.onclick = function(event) {
+                  event.preventDefault();
+
+                  target.classList.toggle(className);
+                };
+              }
+            });
+        </script></nav></div><div class="container mainContainer docsContainer"><div class="wrapper"><div class="post"><header class="postHeader"><h1 id="__docusaurus" class="postHeaderTitle">Reading Scala</h1></header><article><div><span><p>A joy/headache of writing Scala is just how many ways there are to write any given program.
+On the one hand, it is nice to have some options.
+On the other, it necessitates the adoption of a programming style that works well for you, your team, and your projects.
+These conventions, as much about avoiding bugs as signaling intent to readers, are often expressed in terms of how close to purely functional vs how close to a Java/Object Oriented style they are.</p>
+<p>Beyond these stylistic impacts, different library ecosystems will be a better fit for different programming styles.
+GeoTrellis is closer to the functional side of things and has tended to prefer the adoption of technologies like Cats, Circie, and Doobie which are put out and supported by <a href="https://typelevel.org/">TypeLevel</a>
+These libraries tend to be on the functional side but unlike many FP ecosystems, they also tend to be geared towards building real applications and providing solid documentation.</p>
+<h2><a class="anchor" aria-hidden="true" id="functional-programming"></a><a href="#functional-programming" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Functional Programming</h2>
+<p>So, what is functional programming?
+Here's how it is (not exhaustively) described on <a href="https://en.wikipedia.org/w/index.php?title=Functional_programming&amp;oldid=947768235">Wikipedia</a>:
+FP is the paradigm that &quot;treats computation as the evaluation of mathematical functions and avoids changing-state and mutable data. It is a declarative programming paradigm in that programming is done with expressions or declarations instead of statements. In functional code, the output value of a function depends only on its arguments, so calling a function with the same value for an argument always produces the same result.&quot;</p>
+<h3><a class="anchor" aria-hidden="true" id="prefer-immutability"></a><a href="#prefer-immutability" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Prefer Immutability</h3>
+<p>Mutability refers to the propensity for a reference to change in value within the same scope over the course of a program's run.
+If a variable is mutable, merely seeing its declaration isn't enough to infer its value.
+The variable could have been updated or even reset to undefined and it often requires a great deal of effort to verify.
+Debugging mutable code might require printing the value at multiple points during the program's execution and building a sophisticated model of the program in your head.</p>
+<p>Take a look at this python code which attempts to calculate the average of a list and note that <code>hundredSum</code>, which keeps track of the sum as new numbers roll in, is reassigned:</p>
+<pre><code class="hljs css language-python">hundred = [x <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> range(<span class="hljs-number">100</span>)]
+hundredSum = <span class="hljs-number">0</span>
+<span class="hljs-keyword">for</span> num <span class="hljs-keyword">in</span> hundred:
+  hundredSum = hundredSum + num
+mean = hundredSum/len(hundred)
+</code></pre>
+<p>In javascript, variables are often denoted with <code>var</code>.
+Borrowing from and extending that convention, Scala allows immutable references by declaring them with <code>val</code> and mutable references if declared with <code>var</code>.
+Remember, <code>val</code> is a value whereas <code>var</code> is variable (i.e. its value can vary)</p>
+<pre><code class="hljs css language-scala"><span class="hljs-keyword">val</span> lst = <span class="hljs-number">1</span> to <span class="hljs-number">100</span> toList
+<span class="hljs-keyword">val</span> mean = lst.sum / lst.length
+</code></pre>
+<blockquote>
+<p>Scala is often less strict than other functional languages.
+It is thus easier for us to write mutable code than it would be in some of the more restrictive functional languages.
+This is a bit of a double-edged sword.
+It is bad because it means that we can accidentally introduce code that is relatively likely to have/lead to bugs.
+It is good because the machinery and processes which constitute a program's instantiation are more similar to iterating and updating than applying a function.
+Abstraction has costs and Scala allows us the escape-hatch of using mutable code where such optimizations are necessary</p>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="prefer-referential-transparency"></a><a href="#prefer-referential-transparency" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Prefer Referential Transparency</h3>
+<p>A function is said to possess referential transparency if that function's return value/output depends entirely on the input and if the same input value must produce the same output.
+This property, much like immutability, makes code far easier to read.
+To see why, consider a what would be required to implement a function which lacks referential transparency.
+To arrive at different result values for a given 'function' given the exact same parameters, that function would have to effect (update or read) an external value.
+Thus, we say that such functions have 'side-effects'.
+Such functions can't be reasoned about on their own merits.
+Instead, as with mutable code, understanding a function which has side-effects demands a sophisticated model of the program in which it exists.</p>
+<p>Good - nothing outside the function is referred to.
+This function will always work just as expected.</p>
+<pre><code class="hljs css language-scala"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">plusOne</span></span>(num: <span class="hljs-type">Int</span>): <span class="hljs-type">Int</span> = num + <span class="hljs-number">1</span>
+</code></pre>
+<p>Bad - this function works correctly only the first time that it is called</p>
+<pre><code class="hljs css language-scala"><span class="hljs-keyword">var</span> one = <span class="hljs-number">1</span>
+<span class="hljs-comment">// one: Int = 1</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">plusOne</span></span>(num: <span class="hljs-type">Int</span>) = {
+  <span class="hljs-keyword">val</span> toReturn = num + one <span class="hljs-comment">// side-effect (reading function-external value)</span>
+  one = <span class="hljs-number">2</span> <span class="hljs-comment">// side-effect (reassignment)</span>
+  toReturn
+}
+</code></pre>
+<h2><a class="anchor" aria-hidden="true" id="leverage-higher-order-functions"></a><a href="#leverage-higher-order-functions" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Leverage Higher Order Functions</h2>
+<p>Higher order functions are functions which, themselves, take functions as arguments.
+They're popular even outside of functional programming languages at this point and they can dramatically simplify certain compound problems.</p>
+<p>To see how higher order functions can simplify the representation of complex processes, consider the case of the javascript callback.
+I send out a request and expect to get a response back within a few hundred milliseconds.
+In the meantime, code execution can not simply stop.
+The page can't be allowed freeze while we wait for a response from the server.
+Instead, I want to be able to pass a recipe or strategy for reacting to the receipt of a response.
+This is the callback and it is a very common form of higher order function.
+Instead of writing code which manages the tedium of checking potential responses and eventually queues up a behavior, the callback structure makes it possible to write a function which takes a response (as though I already have one).
+When the response comes in, the higher order function will use the function passed to it, thus freeing me from thinking about/representing that particular concern.</p>
+<h3><a class="anchor" aria-hidden="true" id="mapping-and-flatmapping"></a><a href="#mapping-and-flatmapping" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Mapping and Flatmapping</h3>
+<p>A recurring theme in FP is the use of mapping and flatmapping - extremely general, higher order functions to interact with values locked away inside of a special context.
+One such context has already come up - the context of possibly existing in the future.
+In javascript, this is referred to as a promise.
+In Scala, you're more likely to see them referred to as <code>Future</code>s or <code>IO</code>s and they are type-parametric on their contents.</p>
+<h4><a class="anchor" aria-hidden="true" id="map"></a><a href="#map" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Map</h4>
+<p>Let's look at a few different ways of passing a function to <code>map</code>:
+For this example, <code>List</code> is the context we'll use and it encodes the possibility of many (or 0) elements of type <code>X</code> given a <code>List[X]</code>.</p>
+<pre><code class="hljs css language-scala"><span class="hljs-keyword">val</span> lst = <span class="hljs-type">List</span>(<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>)
+<span class="hljs-comment">// lst: List[Int] = List(1, 2, 3)</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">times100</span></span>(num: <span class="hljs-type">Int</span>): <span class="hljs-type">Int</span> = num * <span class="hljs-number">100</span>
+lst.map(times100)
+<span class="hljs-comment">// res1: List[Int] = List(100, 200, 300)</span>
+lst.map(_ * <span class="hljs-number">100</span>)
+<span class="hljs-comment">// res2: List[Int] = List(100, 200, 300)</span>
+lst.map({ i: <span class="hljs-type">Int</span> =&gt; i * <span class="hljs-number">100</span>})
+<span class="hljs-comment">// res3: List[Int] = List(100, 200, 300)</span>
+</code></pre>
+<p>For a given mappable/flatmappable context <code>C</code>, value <code>V1</code>, and function which takes a <code>V1</code> and returns a <code>V2</code>, using <code>map</code> ensures an output of <code>C[Int]</code>.
+Here, <code>List[Int]</code> becomes <code>List[String]</code>:</p>
+<pre><code class="hljs css language-scala">lst.map(_.toString)
+<span class="hljs-comment">// res4: List[String] = List("1", "2", "3")</span>
+</code></pre>
+<h4><a class="anchor" aria-hidden="true" id="flatmap"></a><a href="#flatmap" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>FlatMap</h4>
+<p>Flatmapping is similar, if a bit harder to get a handle on at first.
+Whereas <code>map</code> transforms the underlying value but remains ignorant of context, <code>flatMap</code> takes an underlying value and can update both the underlying value and the context.</p>
+<p>For this example, the <code>Option</code> structure will be used.
+It is handy whenever a function may or may not have a result as is the case in standard division.
+Dividing by 0 should be a <code>None</code> while dividing by another number should yield a <code>Some</code>.</p>
+<pre><code class="hljs css language-scala"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">getPrice</span></span>(id: <span class="hljs-type">String</span>): <span class="hljs-type">Option</span>[<span class="hljs-type">Double</span>] =
+  <span class="hljs-keyword">if</span> (id == <span class="hljs-string">"000000-000000"</span>) <span class="hljs-type">None</span>
+  <span class="hljs-keyword">else</span> <span class="hljs-type">Some</span>(<span class="hljs-number">100</span>)
+
+<span class="hljs-type">Some</span>(<span class="hljs-string">"123abc-zxy321"</span>).flatMap(getPrice)
+<span class="hljs-comment">// res5: Option[Double] = Some(100.0)</span>
+<span class="hljs-type">Some</span>(<span class="hljs-string">"000000-000000"</span>).flatMap(getPrice)
+<span class="hljs-comment">// res6: Option[Double] = None</span>
+<span class="hljs-type">None</span>.flatMap(getPrice)
+<span class="hljs-comment">// res7: Option[Double] = None</span>
+</code></pre>
+<h3><a class="anchor" aria-hidden="true" id="filtering"></a><a href="#filtering" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Filtering</h3>
+<p>Filtering is simpler than either of the above higher order functions.
+To filter a <code>List[A]</code>, all that's required is a function <code>A =&gt; Boolean</code>.</p>
+<pre><code class="hljs css language-scala"><span class="hljs-keyword">val</span> evens = <span class="hljs-number">1</span> to <span class="hljs-number">5</span> filter { num =&gt; num % <span class="hljs-number">2</span> == <span class="hljs-number">0</span> }
+<span class="hljs-comment">// evens: collection.immutable.IndexedSeq[Int] = Vector(2, 4)</span>
+<span class="hljs-keyword">val</span> odds = <span class="hljs-number">1</span> to <span class="hljs-number">5</span> filter { num =&gt; num % <span class="hljs-number">2</span> == <span class="hljs-number">1</span> }
+<span class="hljs-comment">// odds: collection.immutable.IndexedSeq[Int] = Vector(1, 3, 5)</span>
+</code></pre>
+<h3><a class="anchor" aria-hidden="true" id="for-comprehension"></a><a href="#for-comprehension" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>For Comprehension</h3>
+<p>When <code>map</code>, <code>flatMap</code>, and <code>filter</code> are defined for a structure (whether a <code>List</code>, or a <code>Future</code>, or an <code>Option</code>, or any other type) that structure can be used inside a <a href="https://docs.scala-lang.org/tour/for-comprehensions.html">for comprehension</a>.
+Opinions among Scala developers bout the value of the <code>for comprehension</code> vary somewhat but they are generally seen as useful when you would otherwise chain together many <code>flatMap</code> calls manually</p>
+<p>Constructing cartesian product of all even numbers from 1 and 5 and all odd numbers from 6 to 10:</p>
+<pre><code class="hljs css language-scala"><span class="hljs-keyword">for</span> {
+  even &lt;- <span class="hljs-number">1</span> to <span class="hljs-number">5</span> <span class="hljs-keyword">if</span> (even % <span class="hljs-number">2</span> == <span class="hljs-number">0</span>)
+  odd &lt;- <span class="hljs-number">6</span> to <span class="hljs-number">10</span> <span class="hljs-keyword">if</span> (odd % <span class="hljs-number">2</span> == <span class="hljs-number">1</span>)
+} <span class="hljs-keyword">yield</span> (even, odd)
+<span class="hljs-comment">// res8: collection.immutable.IndexedSeq[(Int, Int)] = Vector(</span>
+<span class="hljs-comment">//   (2, 7),</span>
+<span class="hljs-comment">//   (2, 9),</span>
+<span class="hljs-comment">//   (4, 7),</span>
+<span class="hljs-comment">//   (4, 9)</span>
+<span class="hljs-comment">// )</span>
+</code></pre>
+<h2><a class="anchor" aria-hidden="true" id="pay-attention-to-implicits"></a><a href="#pay-attention-to-implicits" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Pay Attention to Implicits</h2>
+<p>The power of the compiler actually lets us do certain things which are inadvisable in other languages.
+Implicit classes allow developers to define new methods for even private classes of another provenance.
+Elsewhere this is called duck-typing and it is almost universally frowned upon.
+The issue in a language like Python is that such method extensions will fail if and only if a dangerous code path is taken.
+In Python, that bug might go undetected for months in production only to kill the entire long-running process.
+Scala avoids this problem because the compiler is expressive enough to capture and anticipate many such bugs that would otherwise only be obvious after a crash - it is simply more difficult to write certain types of incorrect code in Scala.</p>
+<p>This type-safe duck typing is exhibited in GeoTrellis' <a href="/geotrellis-workshop/docs/vectors#features-and-json">GeoJSON serialization</a>.
+It is also apparent in some of the type signatures you'll find in the standard library.
+We'll look to one of these as an example.
+Here, a function for sorting anything that has a defined <code>Ordering</code> is defined:</p>
+<pre><code class="hljs css language-scala"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">sortThings</span></span>[<span class="hljs-type">Thing</span>: <span class="hljs-type">Ordering</span>](things: <span class="hljs-type">List</span>[<span class="hljs-type">Thing</span>]) = things.sorted
+</code></pre>
+<p>We can summon the implicit evidence for a given type.</p>
+<pre><code class="hljs css language-scala">implicitly[<span class="hljs-type">Ordering</span>[<span class="hljs-type">Int</span>]]
+<span class="hljs-comment">// res9: Ordering[Int] = scala.math.Ordering$Int$@405a3ba3</span>
+</code></pre>
+<p>Defining new implicit instances isn't especially difficult.
+Here, an <code>Ordering</code> is defined for fruits according to their taste:</p>
+<pre><code class="hljs css language-scala"><span class="hljs-keyword">import</span> scala.math._
+<span class="hljs-keyword">case</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Fruit</span>(<span class="hljs-params">name: <span class="hljs-type">String</span>, tasteScore: <span class="hljs-type">Int</span></span>)</span>
+<span class="hljs-keyword">implicit</span> <span class="hljs-keyword">val</span> tasteOrdering = <span class="hljs-keyword">new</span> <span class="hljs-type">Ordering</span>[<span class="hljs-type">Fruit</span>] {
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">compare</span></span>(a: <span class="hljs-type">Fruit</span>, b: <span class="hljs-type">Fruit</span>) = a.tasteScore compare b.tasteScore
+}
+<span class="hljs-comment">// tasteOrdering: Object with Ordering[Fruit] = repl.Session$App0$$anon$1@57cf0d75</span>
+</code></pre>
+<p>Once we have the evidence that <code>Fruit</code> has an <code>Ordering</code>, we can order a <code>List[Fruit]</code></p>
+<pre><code class="hljs css language-scala"><span class="hljs-keyword">val</span> fruits = <span class="hljs-type">List</span>(<span class="hljs-type">Fruit</span>(<span class="hljs-string">"apple"</span>, <span class="hljs-number">7</span>), <span class="hljs-type">Fruit</span>(<span class="hljs-string">"cavendish"</span>, <span class="hljs-number">2</span>), <span class="hljs-type">Fruit</span>(<span class="hljs-string">"mango"</span>, <span class="hljs-number">9</span>))
+<span class="hljs-comment">// fruits: List[Fruit] = List(</span>
+<span class="hljs-comment">//   Fruit("apple", 7),</span>
+<span class="hljs-comment">//   Fruit("cavendish", 2),</span>
+<span class="hljs-comment">//   Fruit("mango", 9)</span>
+<span class="hljs-comment">// )</span>
+fruits.sorted
+<span class="hljs-comment">// res10: List[Fruit] = List(</span>
+<span class="hljs-comment">//   Fruit("cavendish", 2),</span>
+<span class="hljs-comment">//   Fruit("apple", 7),</span>
+<span class="hljs-comment">//   Fruit("mango", 9)</span>
+<span class="hljs-comment">// )</span>
+</code></pre>
+</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/geotrellis-workshop/docs/getting-started"><span class="arrow-prev">← </span><span>Getting Started</span></a><a class="docs-next button" href="/geotrellis-workshop/docs/vectors"><span>Vectors</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#functional-programming">Functional Programming</a><ul class="toc-headings"><li><a href="#prefer-immutability">Prefer Immutability</a></li><li><a href="#prefer-referential-transparency">Prefer Referential Transparency</a></li></ul></li><li><a href="#leverage-higher-order-functions">Leverage Higher Order Functions</a><ul class="toc-headings"><li><a href="#mapping-and-flatmapping">Mapping and Flatmapping</a></li><li><a href="#filtering">Filtering</a></li><li><a href="#for-comprehension">For Comprehension</a></li></ul></li><li><a href="#pay-attention-to-implicits">Pay Attention to Implicits</a></li></ul></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><a href="/geotrellis-workshop/" class="nav-home"><img src="/geotrellis-workshop/img/favicon.png" alt="GeoTrellis" width="66" height="58"/></a><div><h5>Community</h5><a href="/geotrellis-workshop/en/users.html">User Showcase</a><a target="_blank" rel="noreferrer noopener">Gitter.im</a></div><div><h5>More</h5><a href="undefined">Blog</a><a class="github-button" href="" data-icon="octicon-star" data-count-href="/locationtech/geotrellis/stargazers" data-show-count="true" data-count-aria-label="# stargazers on GitHub" aria-label="Star this project on GitHub">Star</a></div></section><section class="copyright">Copyright © 2020 Azavea</section></footer></div></body></html>
