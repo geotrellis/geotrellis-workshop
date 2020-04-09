@@ -1,6 +1,9 @@
 {
   "docs": {
-    "Getting Started": ["getting-started"],
+    "Getting Started": [
+      "getting-started",
+      "reading-scala"
+    ],
     "Vector": [
       "vectors",
       "extents",
