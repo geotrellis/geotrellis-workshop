@@ -3,7 +3,7 @@
 import geotrellis.layer.{LayoutDefinition, SpatialKey, ZoomedLayoutScheme}
 import geotrellis.proj4.WebMercator
 import geotrellis.raster.GridExtent
-import geotrellis.vector.Extent
+import geotrellis.vector._
 
 // TODO: insert picture of the tile vs extent with the key highlighted
 

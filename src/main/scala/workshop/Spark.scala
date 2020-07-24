@@ -1,4 +1,4 @@
-package workshop.util
+package workshop
 
 import org.apache.spark._
 

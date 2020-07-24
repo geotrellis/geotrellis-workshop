@@ -2,6 +2,9 @@ import geotrellis.layer.{LayoutDefinition, LayoutTileSource, SpatialKey, ZoomedL
 import geotrellis.raster._
 import geotrellis.raster.geotiff.GeoTiffRasterSource
 import geotrellis.raster.io.geotiff.GeoTiff
+import workshop.data.TerrainTiles
+
+TerrainTiles.getRasterSource(SpatialKey(100,100))
 
 // There is an image on the internet, lets read it using RasterSource
 // `RasterSource` interface is fundamental raster input interface in GeoTrellis.
