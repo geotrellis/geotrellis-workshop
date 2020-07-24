@@ -1,4 +1,4 @@
 object Version {
-  val geotrellis = "3.2.1-SNAPSHOT"
+  val geotrellis = "3.4.1"
   val spark = "2.4.5"
 }

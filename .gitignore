@@ -23,3 +23,6 @@ pc.stdout.log
 .idea/usage.statistics.xml
 .idea/tasks.xml
 metals.sbt
+.idea
+.vscode
+

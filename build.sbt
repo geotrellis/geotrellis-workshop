@@ -1,4 +1,4 @@
-ThisBuild / scalaVersion := "2.12.10"
+ThisBuild / scalaVersion := "2.12.11"
 ThisBuild / version := "0.1.0-SNAPSHOT"
 ThisBuild / organization := "com.azavea.geotrellis"
 ThisBuild / organizationName := "GeoTrellis"
