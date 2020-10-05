@@ -4,7 +4,9 @@ title: Histograms
 sidebar_label: Histograms 
 ---
 
-It’s often useful to derive a histogram from rasters, which represents a distribution of the values in a raster. In GeoTrellis, we support two types of histograms:
+Histograms efficiently compute statistics such as min, max, median, mode and median. They can also derive quantile breaks, commonly used to generate color maps as described in [Rendering Images](rendering-images.md#via-histogram).
+
+It’s often useful to derive a histogram from rasters, which represent a distribution of the pixel values. In GeoTrellis, we support two types of histograms:
 
 - `Histogram[Int]`: represents the exact counts of integer values
 - `Histogram[Double]`: represents a grouping of values into a discrete number of buckets
@@ -16,8 +18,6 @@ The default implementation of `Histogram[Int]` is the `geotrellis.raster.histogr
 The default implementation of `Histogram[Double]` is the `geotrellis.raster.histogram.StreamingHistogram`, developed by James McClain and based on the paper:
 
 > Ben-Haim, Yael, and Elad Tom-Tov. "A streaming parallel decision tree algorithm."  The Journal of Machine Learning Research 11 (2010): 849-872.
-
-Histograms efficiently compute statistics such as min, max, median, mode and median. They can also derive quantile breaks, commonly used to generate color maps as described in [Rendering Images](rendering-images.md#via-histogram).
 
 ## The Basics
 
