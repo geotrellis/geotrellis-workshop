@@ -5,12 +5,17 @@
     "previous": "Previous",
     "tagline": "A geographic data processing engine for high performance applications",
     "docs": {
+      "extents": {
+        "title": "Extents",
+        "sidebar_label": "Extents"
+      },
       "getting-started": {
         "title": "Getting Started",
         "sidebar_label": "Getting Started"
       },
-      "layer-ingest": {
-        "title": "Layer Ingest"
+      "histograms": {
+        "title": "Histograms",
+        "sidebar_label": "Histograms"
       },
       "layer-model": {
         "title": "Layer Model"
@@ -27,6 +32,10 @@
         "title": "RasterSource",
         "sidebar_label": "RasterSource"
       },
+      "reading-scala": {
+        "title": "Reading Scala",
+        "sidebar_label": "Reading Scala"
+      },
       "rendering-images": {
         "title": "Rendering Images",
         "sidebar_label": "Rendering Images"
@@ -38,10 +47,6 @@
       "spark-indexed-layers": {
         "title": "Indexed Layers",
         "sidebar_label": "Indexed Layers"
-      },
-      "spark-layer-ingest": {
-        "title": "Layer Ingest",
-        "sidebar_label": "Layer Ingest"
       },
       "spark-layer-rdd": {
         "title": "Tile Layer RDD",

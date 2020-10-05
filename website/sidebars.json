@@ -13,6 +13,7 @@
       "rasters",
       "tiles",
       "rastersource",
+      "histograms",
       "rendering-images"
     ],
     "Layer": [
