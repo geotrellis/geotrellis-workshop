@@ -1,6 +1,12 @@
 version: "3"
 
 services:
+  jupyterhub:
+    build:
+      context: .
+      dockerfile: Dockerfile-jupyterhub
+    ports:
+      - 8888:8888
   docusaurus:
     build: .
     ports:
