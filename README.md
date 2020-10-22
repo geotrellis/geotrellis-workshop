@@ -1,7 +1,5 @@
 # GeoTrellis Workshop
 
-
-
 ## Contents
 
 This repository contains several types of workshop material that is intended to share code, data and examples.
@@ -12,18 +10,15 @@ This repository contains several types of workshop material that is intended to 
 
 ![Workshop Site](img/workshop-site.png)
 
-These documents are meant to be used as a mixture of workshop specific reference and walkthroughs. The sections contain all the required import and are intended to be copy pasted either into Scala Workbook or Jupyter Notebook. The workshop presenter select and discuss sections in detail acording the the schedule or as questions come up.
+These documents are meant to be used as a mixture of workshop specific reference and walkthroughs. The sections contain all the required import and are intended to be copy pasted either into Scala Workbook or Jupyter Notebook. The workshop presenter will select and discuss sections in detail acording the the schedule or as questions come up.
 
+### Scala Jupyter Notebooks
 
-### Scala Worksheets
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/geotrellis/geotrellis-workshop/master?filepath=notebooks)
 
-[src/main/scala/worksheet](src/main/scala/worksheet) contains IntelliJ worksheets that accompany the material in modules.
+The examples in `./notebooks` can be run interactively via [mybinder.org](https://mybinder.org). Click the Binder badge above to begin a new interactive notebook session.
 
-![Workshop Site](img/scala-worksheets.png)
-
-To access these worksheets checkout and open this repository in IntelliJ IDEA and browse to the worksheet folder. These worksheets can be evaluated REPL style and IntelliJ can be used for code navigation. These worksheets will be used for hands-on section of Scala concepts and GeoTrellis types.
-
-*Note*: It is currently not possible to run Spark worksheets that use function closures.
+Alternatively, these notebooks can be opened locally. Run `docker-compose run --rm jupyterhub` then navigate to the local http url printed to the console.
 
 ### SBT Console
 
