@@ -18,7 +18,10 @@ These documents are meant to be used as a mixture of workshop specific reference
 
 The examples in `./notebooks` can be run interactively via [mybinder.org](https://mybinder.org). Click the Binder badge above to begin a new interactive notebook session.
 
-Alternatively, these notebooks can be opened locally. Run `docker-compose run --rm jupyterhub` then navigate to the local http url printed to the console.
+Alternatively, these notebooks can be opened locally. From the project directory run:
+```bash
+docker run -it --rm -p 8888:8888 -v $PWD/notebooks:/home/jovyan/work almondsh/almond:latest
+```
 
 ### SBT Console
 
