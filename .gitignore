@@ -25,4 +25,4 @@ pc.stdout.log
 metals.sbt
 .idea
 .vscode
-
+notebooks/.local
