@@ -1,3 +1,6 @@
+# Jupyter #
+.ipynb_checkpoints
+
 # Scala #
 
 project/boot
@@ -26,3 +29,5 @@ metals.sbt
 .idea
 .vscode
 notebooks/.local
+*.tiff
+*.tif
