@@ -29,5 +29,6 @@ metals.sbt
 .idea
 .vscode
 notebooks/.local
+notebooks/*.geojson
 *.tiff
 *.tif
